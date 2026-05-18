@@ -59,7 +59,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .form-input:focus{border-color:var(--green)}
 .form-input::placeholder{color:var(--text3)}
 .level-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.level-opt{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);padding:13px 14px;cursor:pointer;transition:all .18s;text-align:left}
+.level-opt{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);padding:13px 14px;cursor:pointer;transition:all .18s;text-align:left;width:100%;font-family:inherit;display:block;-webkit-appearance:none;appearance:none;touch-action:manipulation}
 .level-opt.sel{border-color:var(--green);background:var(--green-dim)}
 .level-opt h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
 .level-opt p{font-size:11px;color:var(--text2)}
@@ -265,18 +265,18 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div class="form-block">
       <label class="form-label">¿Cuál es tu nivel de inglés?</label>
       <div class="level-grid" id="level-grid">
-        <div class="level-opt sel" data-level="beginner" onclick="selLevel(this)">
+        <button class="level-opt sel" data-level="beginner" onclick="selLevel(this)" type="button">
           <h4>Principiante</h4><p>Sé muy poco inglés</p>
-        </div>
-        <div class="level-opt" data-level="elementary" onclick="selLevel(this)">
+        </button>
+        <button class="level-opt" data-level="elementary" onclick="selLevel(this)" type="button">
           <h4>Elemental</h4><p>Conozco lo básico</p>
-        </div>
-        <div class="level-opt" data-level="intermediate" onclick="selLevel(this)">
+        </button>
+        <button class="level-opt" data-level="intermediate" onclick="selLevel(this)" type="button">
           <h4>Intermedio</h4><p>Me comunico un poco</p>
-        </div>
-        <div class="level-opt" data-level="advanced" onclick="selLevel(this)">
+        </button>
+        <button class="level-opt" data-level="advanced" onclick="selLevel(this)" type="button">
           <h4>Avanzado</h4><p>Quiero perfeccionar</p>
-        </div>
+        </button>
       </div>
     </div>
 
