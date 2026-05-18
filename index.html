@@ -37,18 +37,14 @@
   --r-xl: 28px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px}
-.screen{position:fixed;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .25s;overflow:hidden}
-.screen.active{opacity:1;pointer-events:all}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px}
+.screen{display:none;flex-direction:column}
+.screen.active{display:flex}
+#screen-onboard{min-height:100vh;align-items:center;overflow-y:auto;background:var(--bg)}
+#screen-app{position:fixed;inset:0;overflow:hidden}
 
 /* ── ONBOARDING ─────────────────────────────────────────── */
-#screen-onboard{
-  background:var(--bg);
-  justify-content:flex-start;
-  align-items:center;
-  padding:env(safe-area-inset-top,0) 0 0;
-  overflow-y:auto;
-}
+/* onboard styles handled above */
 .onboard-inner{width:100%;max-width:420px;padding:2rem 1.5rem 3rem;display:flex;flex-direction:column;align-items:center}
 .onboard-logo{margin-bottom:.5rem}
 .onboard-logo img{width:160px;height:auto}
@@ -59,10 +55,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .form-input:focus{border-color:var(--green)}
 .form-input::placeholder{color:var(--text3)}
 .level-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.level-opt{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);padding:13px 14px;cursor:pointer;transition:all .18s;text-align:left;width:100%;font-family:inherit;display:block;-webkit-appearance:none;appearance:none;touch-action:manipulation}
+.level-opt{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);padding:13px 14px;cursor:pointer;transition:all .18s;text-align:left;user-select:none;-webkit-user-select:none}
 .level-opt.sel{border-color:var(--green);background:var(--green-dim)}
-.level-opt h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
-.level-opt p{font-size:11px;color:var(--text2)}
+.lv-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;pointer-events:none}
+.lv-desc{font-size:11px;color:var(--text2);pointer-events:none}
 .apikey-block{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:1.2rem;width:100%}
 .apikey-block p{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px}
 .apikey-block a{color:var(--green);text-decoration:none}
@@ -265,18 +261,22 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div class="form-block">
       <label class="form-label">¿Cuál es tu nivel de inglés?</label>
       <div class="level-grid" id="level-grid">
-        <button class="level-opt sel" data-level="beginner" onclick="selLevel(this)" type="button">
-          <h4>Principiante</h4><p>Sé muy poco inglés</p>
-        </button>
-        <button class="level-opt" data-level="elementary" onclick="selLevel(this)" type="button">
-          <h4>Elemental</h4><p>Conozco lo básico</p>
-        </button>
-        <button class="level-opt" data-level="intermediate" onclick="selLevel(this)" type="button">
-          <h4>Intermedio</h4><p>Me comunico un poco</p>
-        </button>
-        <button class="level-opt" data-level="advanced" onclick="selLevel(this)" type="button">
-          <h4>Avanzado</h4><p>Quiero perfeccionar</p>
-        </button>
+        <div class="level-opt sel" id="lv-beginner" onclick="selLevel('beginner')">
+          <div class="lv-name">Principiante</div>
+          <div class="lv-desc">Sé muy poco inglés</div>
+        </div>
+        <div class="level-opt" id="lv-elementary" onclick="selLevel('elementary')">
+          <div class="lv-name">Elemental</div>
+          <div class="lv-desc">Conozco lo básico</div>
+        </div>
+        <div class="level-opt" id="lv-intermediate" onclick="selLevel('intermediate')">
+          <div class="lv-name">Intermedio</div>
+          <div class="lv-desc">Me comunico un poco</div>
+        </div>
+        <div class="level-opt" id="lv-advanced" onclick="selLevel('advanced')">
+          <div class="lv-name">Avanzado</div>
+          <div class="lv-desc">Quiero perfeccionar</div>
+        </div>
       </div>
     </div>
 
@@ -612,15 +612,16 @@ async function geminiChat(msgs) {
 }
 
 // ── ONBOARD ───────────────────────────────────────────────
-function selLevel(el) {
+function selLevel(level) {
   document.querySelectorAll('.level-opt').forEach(x => x.classList.remove('sel'));
-  el.classList.add('sel');
+  const el = document.getElementById('lv-' + level);
+  if(el) el.classList.add('sel');
 }
 
 function startApp() {
   const name = document.getElementById('inp-name').value.trim();
   const key = document.getElementById('inp-key').value.trim();
-  const lvl = document.querySelector('.level-opt.sel')?.dataset.level || 'beginner';
+  const selEl = document.querySelector('.level-opt.sel'); const lvl = selEl ? selEl.id.replace('lv-','') : 'beginner';
   if(!name) { toast('Ingresa tu nombre 👋','info'); return; }
   if(!key || !key.startsWith('AIza')) { toast('Ingresa tu Gemini API key','info'); return; }
   S.name = name; S.apiKey = key; S.level = lvl; S.streak = 1;
