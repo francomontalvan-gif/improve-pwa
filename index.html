@@ -41,25 +41,24 @@ html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:'Plus Jak
 
 /* LEVEL GRID - super simple, no nesting issues */
 .lv-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:1.2rem;width:100%;max-width:420px}
-.lv-btn{
-  background:#1f3642;
+/* radio level selector */
+.lv-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:1.2rem;width:100%;max-width:420px}
+.lv-radio{display:none}
+.lv-label{
+  display:block;background:#1f3642;
   border:2px solid rgba(255,255,255,0.1);
-  border-radius:14px;
-  padding:13px 14px;
-  cursor:pointer;
-  text-align:left;
-  color:#f2f7f5;
-  font-family:inherit;
-  transition:all .15s;
-  min-height:60px;
+  border-radius:14px;padding:13px 14px;
+  cursor:pointer;color:#f2f7f5;
+  transition:all .15s;min-height:60px;
+  -webkit-tap-highlight-color:rgba(61,221,85,0.2);
 }
-.lv-btn.sel{
+.lv-radio:checked + .lv-label{
   border-color:#3DDD55;
   background:rgba(61,221,85,0.15);
 }
-.lv-btn .n{font-size:13px;font-weight:700;display:block;margin-bottom:3px}
-.lv-btn .d{font-size:11px;color:#8ba8b5;display:block}
-.lv-btn.sel .d{color:#3DDD55}
+.lv-label .n{font-size:13px;font-weight:700;display:block;margin-bottom:3px}
+.lv-label .d{font-size:11px;color:#8ba8b5;display:block}
+.lv-radio:checked + .lv-label .d{color:#3DDD55}
 
 .ob-key{background:#1f3642;border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px;margin-bottom:1.2rem;width:100%;max-width:420px}
 .ob-key p{font-size:13px;color:#8ba8b5;line-height:1.6;margin-bottom:10px}
@@ -233,22 +232,17 @@ html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:'Plus Jak
 
   <label class="ob-label">¿Cuál es tu nivel de inglés?</label>
   <div class="lv-grid">
-    <button class="lv-btn sel" id="lv-beginner" onclick="selLv('beginner')" type="button">
-      <span class="n">Principiante</span>
-      <span class="d">Sé muy poco inglés</span>
-    </button>
-    <button class="lv-btn" id="lv-elementary" onclick="selLv('elementary')" type="button">
-      <span class="n">Elemental</span>
-      <span class="d">Conozco lo básico</span>
-    </button>
-    <button class="lv-btn" id="lv-intermediate" onclick="selLv('intermediate')" type="button">
-      <span class="n">Intermedio</span>
-      <span class="d">Me comunico un poco</span>
-    </button>
-    <button class="lv-btn" id="lv-advanced" onclick="selLv('advanced')" type="button">
-      <span class="n">Avanzado</span>
-      <span class="d">Quiero perfeccionar</span>
-    </button>
+    <input class="lv-radio" type="radio" name="level" id="lv-beginner" value="beginner" checked>
+    <label class="lv-label" for="lv-beginner"><span class="n">Principiante</span><span class="d">Sé muy poco inglés</span></label>
+
+    <input class="lv-radio" type="radio" name="level" id="lv-elementary" value="elementary">
+    <label class="lv-label" for="lv-elementary"><span class="n">Elemental</span><span class="d">Conozco lo básico</span></label>
+
+    <input class="lv-radio" type="radio" name="level" id="lv-intermediate" value="intermediate">
+    <label class="lv-label" for="lv-intermediate"><span class="n">Intermedio</span><span class="d">Me comunico un poco</span></label>
+
+    <input class="lv-radio" type="radio" name="level" id="lv-advanced" value="advanced">
+    <label class="lv-label" for="lv-advanced"><span class="n">Avanzado</span><span class="d">Quiero perfeccionar</span></label>
   </div>
 
   <div class="ob-key">
@@ -258,7 +252,7 @@ html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:'Plus Jak
     <input type="password" class="ob-input" id="inp-key" placeholder="AIza..." style="margin-bottom:0">
   </div>
 
-  <button class="ob-cta" onclick="startApp()">Comenzar →</button>
+  <button class="ob-cta" type="button" onclick="startApp()" style="margin-top:1rem">Comenzar →</button>
 </div>
 
 <!-- ══ APP ═══════════════════════════════════════════════════ -->
@@ -446,18 +440,16 @@ const S = {
 };
 
 // ── ONBOARD ───────────────────────────────────────────────
-function selLv(lv) {
-  document.querySelectorAll('.lv-btn').forEach(b => b.classList.remove('sel'));
-  document.getElementById('lv-' + lv).classList.add('sel');
-  S.level = lv;
-}
+// level selected via native radio input
 
 function startApp() {
   const name = document.getElementById('inp-name').value.trim();
   const key  = document.getElementById('inp-key').value.trim();
-  if(!name) { toast('Ingresa tu nombre 👋','info'); return; }
-  if(!key || !key.startsWith('AIza')) { toast('Ingresa tu Gemini API key','info'); return; }
-  S.name = name; S.apiKey = key; S.streak = 1;
+  const lvlEl = document.querySelector('input[name="level"]:checked');
+  const lvl = lvlEl ? lvlEl.value : 'beginner';
+  if(!name) { alert('Ingresa tu nombre'); return; }
+  if(!key)  { alert('Ingresa tu Gemini API key'); return; }
+  S.name = name; S.apiKey = key; S.level = lvl; S.streak = 1;
   save(); goApp();
 }
 
