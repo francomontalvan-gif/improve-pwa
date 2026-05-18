@@ -440,7 +440,12 @@ const S = {
 };
 
 // ── ONBOARD ───────────────────────────────────────────────
-// level selected via native radio input
+function selLv(lv) {
+  document.querySelectorAll('.lv-radio').forEach(r => r.checked = false);
+  const el = document.getElementById('lv-' + lv);
+  if(el) el.checked = true;
+  S.level = lv;
+}
 
 function startApp() {
   const name = document.getElementById('inp-name').value.trim();
@@ -477,7 +482,7 @@ const VOCAB = {
   ],
   viajes:[
     {en:'airport',pron:'/ˈɛrpɔːrt/',es:'aeropuerto',ex:'We arrived at the <strong>airport</strong> early.'},
-    {en:'passport',pron:'/ˈpæspɔːrt/',es:'pasaporte',ex:'Don't forget your <strong>passport</strong>.'},
+    {en:'passport',pron:'/ˈpæspɔːrt/',es:'pasaporte',ex:'Don\'t forget your <strong>passport</strong>.'},
     {en:'hotel',pron:'/hoʊˈtɛl/',es:'hotel',ex:'The <strong>hotel</strong> has a great view.'},
     {en:'ticket',pron:'/ˈtɪkɪt/',es:'boleto',ex:'I bought a plane <strong>ticket</strong>.'},
     {en:'luggage',pron:'/ˈlʌɡɪdʒ/',es:'equipaje',ex:'My <strong>luggage</strong> is too heavy.'},
@@ -510,18 +515,18 @@ const PHRASES = {
     {en:'Good morning! How are you?',es:'¡Buenos días! ¿Cómo estás?'},
     {en:'Nice to meet you!',es:'¡Mucho gusto!'},
     {en:'How have you been lately?',es:'¿Cómo has estado últimamente?'},
-    {en:'It's great to see you again!',es:'¡Qué bueno verte de nuevo!'},
+    {en:'It\'s great to see you again!',es:'¡Qué bueno verte de nuevo!'},
   ],
   restaurante:[
-    {en:'I'd like to order, please.',es:'Quisiera ordenar, por favor.'},
+    {en:'I\'d like to order, please.',es:'Quisiera ordenar, por favor.'},
     {en:'Could I see the menu?',es:'¿Me puede traer el menú?'},
     {en:'The bill, please.',es:'La cuenta, por favor.'},
     {en:'Is this dish spicy?',es:'¿Este plato es picante?'},
   ],
   trabajo:[
     {en:'Could we schedule a meeting?',es:'¿Podemos agendar una reunión?'},
-    {en:'I'll get back to you on that.',es:'Te respondo sobre eso después.'},
-    {en:'I'm working on it.',es:'Lo estoy trabajando.'},
+    {en:'I\'ll get back to you on that.',es:'Te respondo sobre eso después.'},
+    {en:'I\'m working on it.',es:'Lo estoy trabajando.'},
     {en:'Could you clarify that point?',es:'¿Puedes aclarar ese punto?'},
   ],
   emergencias:[
@@ -535,7 +540,7 @@ const PHRASES = {
 const SPEAK_P = [
   {en:'Good morning! How are you today?',es:'¡Buenos días! ¿Cómo estás hoy?'},
   {en:'Could you speak more slowly, please?',es:'¿Podrías hablar más despacio, por favor?'},
-  {en:'I don't understand. Can you repeat that?',es:'No entiendo. ¿Puedes repetirlo?'},
+  {en:'I don\'t understand. Can you repeat that?',es:'No entiendo. ¿Puedes repetirlo?'},
   {en:'The weather is beautiful today.',es:'El clima está hermoso hoy.'},
   {en:'I would like a cup of coffee, please.',es:'Quisiera una taza de café, por favor.'},
   {en:'Where is the nearest bus stop?',es:'¿Dónde está la parada de bus más cercana?'},
@@ -797,8 +802,7 @@ function renderPhraseCats() {
 function selPhraseCat(c){S.phraseCat=c;renderPhrases();renderPhraseCats();}
 function renderPhrases() {
   document.getElementById('phrases-list').innerHTML=PHRASES[S.phraseCat].map(p=>
-    `<div class="phrase-item"><div class="phrase-txt"><div class="phrase-en">${p.en}</div><div class="phrase-es">${p.es}</div></div><button class="phrase-spk" onclick="speak('${p.en.replace(/'/g,"\'")}')" >🔊</button></div>`
-  ).join('');
+    `<div class="phrase-item"><div class="phrase-txt"><div class="phrase-en">${p.en}</div><div class="phrase-es">${p.es}</div></div><button class="phrase-spk" onclick="speak('${p.en.replace(/'/g,"\'")}')" >🔊</button></div>`  ).join('');
 }
 async function morePhrases() {
   const l=document.getElementById('ph-load'); l.style.display='block';
@@ -1065,7 +1069,7 @@ async function practiceWord(){
 }
 
 // ── QUIZ ──────────────────────────────────────────────────
-let curQuiz=null,qCount=0;
+curQuiz=null,qCount=0;
 async function genQuiz(){
   document.getElementById('qz-load').style.display='block';
   document.getElementById('qz-fb').className='qfb';
@@ -1104,7 +1108,7 @@ function checkQuiz(idx){
 }
 
 // ── SPEAK ─────────────────────────────────────────────────
-let spIdx=0;
+spIdx=0;
 function loadSpeak(){
   const p=SPEAK_P[spIdx%SPEAK_P.length];
   document.getElementById('sp-phrase').textContent=p.en;
@@ -1157,8 +1161,7 @@ function renderPhraseCats(){
 function selPhraseCat(c){S.phraseCat=c;renderPhrases();renderPhraseCats();}
 function renderPhrases(){
   document.getElementById('phrases-list').innerHTML=PHRASES[S.phraseCat].map(p=>
-    `<div class="ph-item"><div class="ph-txt"><div class="ph-en">${p.en}</div><div class="ph-es">${p.es}</div></div><button class="ph-spk" onclick="speak('${p.en.replace(/'/g,"\'")}')" >🔊</button></div>`
-  ).join('');
+    `<div class="ph-item"><div class="ph-txt"><div class="ph-en">${p.en}</div><div class="ph-es">${p.es}</div></div><button class="ph-spk" onclick="speak('${p.en.replace(/'/g,"\'")}')" >🔊</button></div>`  ).join('');
 }
 async function morePhrases(){
   const l=document.getElementById('ph-load');l.style.display='block';
