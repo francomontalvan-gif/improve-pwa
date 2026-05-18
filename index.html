@@ -249,7 +249,7 @@ html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:'Plus Jak
     <p>🔑 Usa <strong>Gemini AI</strong> de Google (gratis).<br>
     1. Ve a <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com</a><br>
     2. Crea tu API key &rarr; pégala aquí</p>
-    <input type="password" class="ob-input" id="inp-key" placeholder="AIza..." style="margin-bottom:0">
+    <input type="text" class="ob-input" id="inp-key" placeholder="Pega tu API key aquí" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" style="margin-bottom:0">
   </div>
 
   <button class="ob-cta" type="button" onclick="startApp()" style="margin-top:1rem">Comenzar →</button>
@@ -446,11 +446,13 @@ function startApp() {
   const name = document.getElementById('inp-name').value.trim();
   const key  = document.getElementById('inp-key').value.trim();
   const lvlEl = document.querySelector('input[name="level"]:checked');
-  const lvl = lvlEl ? lvlEl.value : 'beginner';
-  if(!name) { alert('Ingresa tu nombre'); return; }
-  if(!key)  { alert('Ingresa tu Gemini API key'); return; }
-  S.name = name; S.apiKey = key; S.level = lvl; S.streak = 1;
-  save(); goApp();
+  const lvl = lvlEl ? lvlEl.value : 'intermediate';
+  S.name = name || 'Usuario';
+  S.apiKey = key;
+  S.level = lvl;
+  S.streak = 1;
+  save();
+  goApp();
 }
 
 function goApp() {
