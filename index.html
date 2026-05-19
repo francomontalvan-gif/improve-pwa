@@ -5,180 +5,146 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#1a2e38">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Improve">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<title>Improve — English AI Tutor</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Improve</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* RESET */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:'Plus Jakarta Sans',sans-serif}
-
-/* ── PAGES ── */
-.page{display:none}
-.page.on{display:block}
-
-/* ── ONBOARD ── */
-#pg-onboard{
-  min-height:100vh;
-  background:#111e25;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:2rem 1.5rem 3rem;
-}
-#pg-onboard.on{display:flex}
-.ob-logo{margin-bottom:.5rem;text-align:center}
-.ob-logo img{width:150px}
+html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:"Plus Jakarta Sans",sans-serif}
+/* PAGES */
+.page{display:none}.page.on{display:block}
+/* ONBOARD */
+#pg-ob{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2.5rem 1.5rem 3rem;background:#111e25}
+#pg-ob.on{display:flex}
+.ob-logo{margin-bottom:.4rem;text-align:center}
+.ob-logo img{width:140px}
 .ob-tag{font-size:14px;color:#8ba8b5;margin-bottom:2rem;text-align:center}
-.ob-label{font-size:11px;font-weight:700;color:#8ba8b5;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:block;width:100%}
-.ob-input{width:100%;background:#1f3642;border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:13px 16px;font-size:15px;font-family:inherit;color:#f2f7f5;outline:none;margin-bottom:1.2rem}
-.ob-input:focus{border-color:#3DDD55}
-.ob-input::placeholder{color:#4d6b78}
-.ob-block{width:100%;max-width:420px;margin-bottom:1rem}
-
-/* LEVEL GRID - super simple, no nesting issues */
-.lv-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:1.2rem;width:100%;max-width:420px}
-/* radio level selector */
-.lv-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:1.2rem;width:100%;max-width:420px}
-.lv-radio{display:none}
-.lv-label{
-  display:block;background:#1f3642;
-  border:2px solid rgba(255,255,255,0.1);
-  border-radius:14px;padding:13px 14px;
-  cursor:pointer;color:#f2f7f5;
-  transition:all .15s;min-height:60px;
-  -webkit-tap-highlight-color:rgba(61,221,85,0.2);
-}
-.lv-radio:checked + .lv-label{
-  border-color:#3DDD55;
-  background:rgba(61,221,85,0.15);
-}
-.lv-label .n{font-size:13px;font-weight:700;display:block;margin-bottom:3px}
-.lv-label .d{font-size:11px;color:#8ba8b5;display:block}
-.lv-radio:checked + .lv-label .d{color:#3DDD55}
-
-.ob-key{background:#1f3642;border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px;margin-bottom:1.2rem;width:100%;max-width:420px}
+.ob-lbl{font-size:11px;font-weight:700;color:#8ba8b5;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:block;width:100%;max-width:400px}
+.ob-in{width:100%;max-width:400px;background:#1f3642;border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 16px;font-size:16px;font-family:inherit;color:#f2f7f5;outline:none;margin-bottom:1.2rem;display:block}
+.ob-in:focus{border-color:#3DDD55}
+.ob-in::placeholder{color:#4d6b78}
+/* LEVEL RADIO */
+.lv-wrap{width:100%;max-width:400px;margin-bottom:1.2rem}
+.lv-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+input.lv-r{position:absolute;opacity:0;width:0;height:0}
+label.lv-l{display:block;background:#1f3642;border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 14px;cursor:pointer;transition:all .15s}
+input.lv-r:checked + label.lv-l{border-color:#3DDD55;background:rgba(61,221,85,.15)}
+.lv-n{font-size:13px;font-weight:700;color:#f2f7f5;display:block;margin-bottom:3px}
+.lv-d{font-size:11px;color:#8ba8b5;display:block}
+input.lv-r:checked + label.lv-l .lv-d{color:#3DDD55}
+/* KEY BLOCK */
+.ob-key{width:100%;max-width:400px;background:#1f3642;border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:14px;margin-bottom:1.2rem}
 .ob-key p{font-size:13px;color:#8ba8b5;line-height:1.6;margin-bottom:10px}
 .ob-key a{color:#3DDD55;text-decoration:none}
-.ob-cta{width:100%;max-width:420px;background:#3DDD55;color:#0d1f27;border:none;border-radius:14px;padding:15px;font-size:16px;font-family:inherit;font-weight:800;cursor:pointer}
+/* CTA */
+.ob-cta{width:100%;max-width:400px;background:#3DDD55;color:#0d1f27;border:none;border-radius:14px;padding:15px;font-size:16px;font-family:inherit;font-weight:800;cursor:pointer;margin-top:.5rem;display:block}
 .ob-cta:active{opacity:.85}
-
-/* ── APP SHELL ── */
+/* APP */
 #pg-app{display:none;position:fixed;inset:0;flex-direction:column;background:#111e25;overflow:hidden}
 #pg-app.on{display:flex}
-
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:max(env(safe-area-inset-top),16px) 18px 12px;background:#1a2e38;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:max(env(safe-area-inset-top),16px) 18px 12px;background:#1a2e38;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
 .tb-brand{display:flex;align-items:center;gap:10px}
 .tb-brand img{height:26px}
 .tb-greet{font-size:12px;color:#8ba8b5}
 .tb-pills{display:flex;gap:8px}
-.pill{background:#1f3642;border:1px solid rgba(255,255,255,0.08);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:600;color:#8ba8b5;display:flex;align-items:center;gap:4px}
+.pill{background:#1f3642;border:1px solid rgba(255,255,255,.08);border-radius:99px;padding:5px 11px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;color:#8ba8b5}
 .pill b{color:#f2f7f5}
-
+/* SCROLL */
 .scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:14px 14px 90px;-webkit-overflow-scrolling:touch}
 .scroll::-webkit-scrollbar{display:none}
-
-/* BOTTOM NAV */
-.bnav{position:absolute;bottom:0;left:0;right:0;display:flex;background:#1a2e38;border-top:1px solid rgba(255,255,255,0.08);padding-bottom:env(safe-area-inset-bottom,0)}
+/* BNAV */
+.bnav{position:absolute;bottom:0;left:0;right:0;display:flex;background:#1a2e38;border-top:1px solid rgba(255,255,255,.08);padding-bottom:env(safe-area-inset-bottom,0)}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;cursor:pointer;color:#4d6b78;border:none;background:none;font-family:inherit}
 .ni.on{color:#3DDD55}
-.ni-icon{font-size:21px}
-.ni-lbl{font-size:10px;font-weight:600}
-
+.ni-ic{font-size:20px}.ni-lb{font-size:10px;font-weight:600}
 /* TABS */
 .tab{display:none}.tab.on{display:block}
-
 /* CARDS */
-.card{background:#1a2e38;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:16px;margin-bottom:10px}
+.card{background:#1a2e38;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;margin-bottom:10px}
 .stitle{font-size:11px;font-weight:700;color:#8ba8b5;letter-spacing:.1em;text-transform:uppercase;margin:16px 0 10px}
-
 /* HOME */
 .streak-banner{background:linear-gradient(135deg,#1f3642,#253f4d);border:1px solid rgba(61,221,85,.2);border-radius:28px;padding:18px 20px;display:flex;align-items:center;gap:16px;margin-bottom:12px}
 .s-num{font-size:44px;font-weight:800;color:#3DDD55;line-height:1}
 .s-info h3{font-size:16px;font-weight:700;margin-bottom:3px}
 .s-info p{font-size:12px;color:#8ba8b5}
 .stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:10px}
-.stat-box{background:#1a2e38;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:13px;text-align:center}
+.stat-box{background:#1a2e38;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:13px;text-align:center}
 .stat-v{font-size:22px;font-weight:800;color:#3DDD55}
 .stat-l{font-size:10px;color:#8ba8b5;margin-top:2px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.qcard{background:#1a2e38;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:16px;cursor:pointer}
+.qcard{background:#1a2e38;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;cursor:pointer}
 .qcard:active{background:#1f3642}
-.qcard-icon{font-size:26px;margin-bottom:8px}
+.qcard-ic{font-size:26px;margin-bottom:8px}
 .qcard h4{font-size:13px;font-weight:700;margin-bottom:2px}
 .qcard p{font-size:11px;color:#8ba8b5}
-.chal-card{background:#1a2e38;border:1px solid rgba(61,221,85,.25);border-radius:28px;padding:18px;margin-bottom:10px}
+.chal{background:#1a2e38;border:1px solid rgba(61,221,85,.25);border-radius:28px;padding:18px;margin-bottom:10px}
 .chal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .chal-name{font-size:16px;font-weight:700}
 .xp-chip{background:rgba(61,221,85,.15);color:#3DDD55;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;border:1px solid rgba(61,221,85,.3)}
 .pbar{height:5px;background:#253f4d;border-radius:99px;overflow:hidden;margin-bottom:12px}
 .pfill{height:100%;background:#3DDD55;border-radius:99px;transition:width .4s}
-
-/* BUTTONS */
+/* BTNS */
 .btn{border:none;border-radius:14px;padding:10px 18px;font-size:13px;font-family:inherit;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .14s}
 .btn:active{transform:scale(.96)}
 .btn-g{background:#3DDD55;color:#0d1f27}
-.btn-gh{background:#1f3642;color:#8ba8b5;border:1px solid rgba(255,255,255,0.08)}
+.btn-gh{background:#1f3642;color:#8ba8b5;border:1px solid rgba(255,255,255,.08)}
 .btn-sm{padding:8px 14px;font-size:12px}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
-
-/* CAT TAGS */
-.cat-row{display:flex;gap:7px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
-.cat-row::-webkit-scrollbar{display:none}
-.ctag{background:#1f3642;color:#8ba8b5;border:1px solid rgba(255,255,255,0.08);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;border:none;font-family:inherit}
-.ctag.on{background:rgba(61,221,85,.15);color:#3DDD55;outline:2px solid rgba(61,221,85,.4)}
-
 /* VOCAB */
+.cat-row{display:flex;gap:7px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
+.cat-row::-webkit-scrollbar{display:none}
+.ctag{background:#1f3642;color:#8ba8b5;border:none;border-radius:99px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}
+.ctag.on{background:rgba(61,221,85,.15);color:#3DDD55;outline:2px solid rgba(61,221,85,.4)}
 .word-hero{text-align:center;padding:2rem 1rem}
-.word-badge{display:inline-block;background:rgba(61,221,85,.15);color:#3DDD55;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:99px;padding:4px 12px;margin-bottom:1rem}
-.word-big{font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:5px}
-.word-pron{font-size:13px;color:#4d6b78;margin-bottom:10px;font-style:italic}
-.word-es{font-size:20px;color:#8ba8b5;font-weight:300;margin-bottom:16px}
-.word-ex{background:#1f3642;border-radius:14px;padding:12px 14px;font-size:13px;color:#8ba8b5;text-align:left;border-left:3px solid #3DDD55;line-height:1.6}
-.word-ex strong{color:#3DDD55}
-
+.w-badge{display:inline-block;background:rgba(61,221,85,.15);color:#3DDD55;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;border-radius:99px;padding:4px 12px;margin-bottom:1rem}
+.w-big{font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:5px}
+.w-pron{font-size:13px;color:#4d6b78;margin-bottom:10px;font-style:italic}
+.w-es{font-size:20px;color:#8ba8b5;font-weight:300;margin-bottom:16px}
+.w-ex{background:#1f3642;border-radius:14px;padding:12px 14px;font-size:13px;color:#8ba8b5;text-align:left;border-left:3px solid #3DDD55;line-height:1.6}
+.w-ex strong{color:#3DDD55}
+.ai-box{background:#1f3642;border-radius:14px;padding:14px;font-size:13px;line-height:1.7;color:#8ba8b5;white-space:pre-wrap;margin-top:10px}
 /* QUIZ */
-.quiz-q{font-size:17px;font-weight:600;margin-bottom:1.2rem;line-height:1.5}
-.quiz-opts{display:grid;gap:8px}
-.qopt{background:#1f3642;border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:13px 16px;font-size:14px;color:#f2f7f5;cursor:pointer;text-align:left;font-family:inherit;font-weight:500}
-.qopt.correct{background:rgba(61,221,85,.12);border-color:#3DDD55;color:#3DDD55}
-.qopt.wrong{background:rgba(255,107,107,.1);border-color:#ff6b6b;color:#ff6b6b}
+.q-txt{font-size:17px;font-weight:600;margin-bottom:1.2rem;line-height:1.5}
+.q-opts{display:grid;gap:8px}
+.qopt{background:#1f3642;border:2px solid rgba(255,255,255,.08);border-radius:14px;padding:13px 16px;font-size:14px;color:#f2f7f5;cursor:pointer;text-align:left;font-family:inherit;font-weight:500;width:100%}
+.qopt:active{transform:scale(.98)}
+.qopt.ok{background:rgba(61,221,85,.12);border-color:#3DDD55;color:#3DDD55}
+.qopt.fail{background:rgba(255,107,107,.1);border-color:#ff6b6b;color:#ff6b6b}
 .qopt:disabled{pointer-events:none}
-.qfb{margin-top:12px;padding:11px 13px;border-radius:14px;font-size:13px;line-height:1.5;display:none}
-.qfb.on{display:block}
-.qfb.ok{background:rgba(61,221,85,.1);color:#3DDD55}
-.qfb.fail{background:rgba(255,107,107,.08);color:#ff6b6b}
-
+.q-fb{margin-top:12px;padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.5;display:none}
+.q-fb.on{display:block}
+.q-fb.ok{background:rgba(61,221,85,.1);color:#3DDD55}
+.q-fb.fail{background:rgba(255,107,107,.08);color:#ff6b6b}
 /* SPEAK */
-.speak-hero{text-align:center;padding:1.5rem 1rem 1rem}
-.speak-lbl{font-size:11px;font-weight:700;color:#8ba8b5;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
-.speak-phrase{font-size:21px;font-weight:700;margin-bottom:6px;line-height:1.35}
-.speak-es{font-size:13px;color:#8ba8b5;margin-bottom:1.5rem}
-.btn-mic{width:70px;height:70px;border-radius:50%;background:#3DDD55;color:#0d1f27;border:none;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 0 0 0 rgba(61,221,85,.4)}
-.btn-mic.go{animation:pulse 1.1s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,221,85,.45)}70%{box-shadow:0 0 0 18px rgba(61,221,85,0)}100%{box-shadow:0 0 0 0 rgba(61,221,85,0))}}
-.sp-trans{font-size:15px;color:#8ba8b5;min-height:22px;text-align:center;margin-bottom:10px}
-.sp-res{padding:11px 13px;border-radius:14px;font-size:13px;line-height:1.5;margin-top:8px;display:none}
+.speak-c{text-align:center;padding:1.5rem 1rem 1rem}
+.sp-lbl{font-size:11px;font-weight:700;color:#8ba8b5;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.sp-ph{font-size:21px;font-weight:700;margin-bottom:6px;line-height:1.35}
+.sp-es{font-size:13px;color:#8ba8b5;margin-bottom:1.5rem}
+.btn-mic{width:70px;height:70px;border-radius:50%;background:#3DDD55;color:#0d1f27;border:none;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.btn-mic.go{animation:pu 1.1s infinite}
+@keyframes pu{0%{box-shadow:0 0 0 0 rgba(61,221,85,.5)}70%{box-shadow:0 0 0 20px rgba(61,221,85,0)}100%{box-shadow:0 0 0 0 rgba(61,221,85,0)}}
+.sp-tr{font-size:15px;color:#8ba8b5;min-height:22px;text-align:center;margin-bottom:10px}
+.sp-res{padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.5;display:none}
 .sp-res.on{display:block}
 .sp-res.ok{background:rgba(61,221,85,.1);color:#3DDD55}
 .sp-res.warn{background:rgba(255,200,87,.08);color:#ffc857}
-.sp-res.fail{background:rgba(255,107,107,.08);color:#ff6b6b}
-
+.sp-res.bad{background:rgba(255,107,107,.08);color:#ff6b6b}
 /* PHRASES */
-.ph-item{background:#1a2e38;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:14px 16px;margin-bottom:9px;display:flex;align-items:center;gap:12px}
-.ph-txt{flex:1}
+.ph-item{background:#1a2e38;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:14px 16px;margin-bottom:9px;display:flex;align-items:center;gap:12px}
 .ph-en{font-size:14px;font-weight:600;margin-bottom:3px}
 .ph-es{font-size:12px;color:#8ba8b5}
-.ph-spk{background:#1f3642;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:8px 10px;font-size:16px;cursor:pointer;color:#f2f7f5;border:none;font-family:inherit}
-
+.ph-spk{background:#1f3642;border:none;border-radius:10px;padding:8px 10px;font-size:16px;cursor:pointer;color:#f2f7f5;font-family:inherit}
 /* CORRECT */
-.corr-ta{width:100%;min-height:88px;background:#1f3642;border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 14px;font-size:14px;font-family:inherit;color:#f2f7f5;outline:none;resize:vertical}
-.corr-ta:focus{border-color:#3DDD55}
-.corr-result{background:#1f3642;border-radius:14px;padding:14px;font-size:13px;line-height:1.75;color:#8ba8b5;white-space:pre-wrap}
-
+.c-ta{width:100%;min-height:88px;background:#1f3642;border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:12px 14px;font-size:14px;font-family:inherit;color:#f2f7f5;outline:none;resize:vertical}
+.c-ta:focus{border-color:#3DDD55}
+.c-res{background:#1f3642;border-radius:14px;padding:14px;font-size:13px;line-height:1.75;color:#8ba8b5;white-space:pre-wrap}
+/* SETTINGS */
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.set-lbl{font-size:14px;font-weight:500}
+.set-val{font-size:13px;color:#8ba8b5}
 /* CHAT */
 .chat-msgs{display:flex;flex-direction:column;gap:13px;padding-bottom:6px}
 .mw{display:flex;gap:9px}
@@ -192,140 +158,121 @@ html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:'Plus Jak
 .chat-bar{position:absolute;bottom:58px;left:0;right:0;display:flex;align-items:center;gap:8px;padding:10px 14px;background:#1a2e38;border-top:1px solid rgba(255,255,255,.08)}
 .chat-in{flex:1;background:#1f3642;border:1px solid rgba(255,255,255,.08);border-radius:99px;padding:10px 16px;font-size:13px;font-family:inherit;color:#f2f7f5;outline:none}
 .chat-in::placeholder{color:#4d6b78}
-.chat-mic{width:38px;height:38px;border-radius:50%;background:#1f3642;border:1px solid rgba(255,255,255,.08);color:#8ba8b5;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.chat-mic.go{background:rgba(61,221,85,.15);color:#3DDD55}
-.chat-send{width:38px;height:38px;border-radius:50%;background:#3DDD55;border:none;color:#0d1f27;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-
-/* MIC OVERLAY */
+.c-mic{width:38px;height:38px;border-radius:50%;background:#1f3642;border:1px solid rgba(255,255,255,.08);color:#8ba8b5;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.c-mic.go{background:rgba(61,221,85,.15);color:#3DDD55}
+.c-send{width:38px;height:38px;border-radius:50%;background:#3DDD55;border:none;color:#0d1f27;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* MIC OV */
 .mic-ov{position:fixed;inset:0;background:rgba(17,30,37,.93);display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:200}
 .mic-ov.on{display:flex}
-.mic-ov-pulse{width:90px;height:90px;border-radius:50%;background:rgba(61,221,85,.15);border:2px solid #3DDD55;display:flex;align-items:center;justify-content:center;font-size:36px;animation:pulse 1.1s infinite}
-.mic-ov-lbl{font-size:14px;color:#8ba8b5}
-.mic-ov-txt{font-size:16px;font-weight:600;text-align:center;padding:0 2rem;min-height:26px;color:#f2f7f5}
-
+.mic-pulse{width:90px;height:90px;border-radius:50%;background:rgba(61,221,85,.15);border:2px solid #3DDD55;display:flex;align-items:center;justify-content:center;font-size:36px;animation:pu 1.1s infinite}
+.mic-txt{font-size:16px;font-weight:600;text-align:center;padding:0 2rem;min-height:26px;color:#f2f7f5}
 /* TOAST */
 .toast{position:fixed;top:max(env(safe-area-inset-top),16px);left:50%;transform:translateX(-50%) translateY(-70px);background:#1a2e38;border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:9px 20px;font-size:13px;font-weight:600;white-space:nowrap;transition:transform .28s;z-index:300;pointer-events:none}
 .toast.on{transform:translateX(-50%) translateY(0)}
 .toast.ok{border-color:rgba(61,221,85,.4);color:#3DDD55}
 .toast.info{color:#8ba8b5}
-
-/* MISC */
-.ai-box{background:#1f3642;border-radius:14px;padding:14px;font-size:13px;line-height:1.7;color:#8ba8b5;white-space:pre-wrap}
-.dots::after{content:'·';animation:d 1s infinite}
-@keyframes d{0%{content:'·'}33%{content:'··'}66%{content:'···'}}
-.loading-txt{font-size:13px;color:#8ba8b5;text-align:center;padding:.6rem}
+.dots::after{content:"·";animation:dt 1s infinite}
+@keyframes dt{0%{content:"·"}33%{content:"··"}66%{content:"···"}}
+.ldg{font-size:13px;color:#8ba8b5;text-align:center;padding:.6rem}
 </style>
 </head>
 <body>
+<!-- ONBOARD -->
+<div id="pg-ob" class="page on">
+  <div class="ob-logo"><img src="data:image/png;base64,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" alt="Improve"></div>
+  <p class="ob-tag">Tu tutor de inglés con IA</p>
 
-<!-- ══ ONBOARD ══════════════════════════════════════════════ -->
-<div id="pg-onboard" class="page on">
-  <div class="ob-logo">
-    <img src="data:image/png;base64,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" alt="Improve">
-  </div>
-  <p class="ob-tag">Tu tutor de inglés con IA &mdash; aprende a tu ritmo</p>
+  <label class="ob-lbl" for="inp-name">Tu nombre</label>
+  <input type="text" class="ob-in" id="inp-name" placeholder="Escribe tu nombre..." autocomplete="off">
 
-  <div class="ob-block">
-    <label class="ob-label" for="inp-name">¿Cuál es tu nombre?</label>
-    <input type="text" class="ob-input" id="inp-name" placeholder="Tu nombre..." autocomplete="off">
-  </div>
-
-  <label class="ob-label">¿Cuál es tu nivel de inglés?</label>
-  <div class="lv-grid">
-    <input class="lv-radio" type="radio" name="level" id="lv-beginner" value="beginner" checked>
-    <label class="lv-label" for="lv-beginner"><span class="n">Principiante</span><span class="d">Sé muy poco inglés</span></label>
-
-    <input class="lv-radio" type="radio" name="level" id="lv-elementary" value="elementary">
-    <label class="lv-label" for="lv-elementary"><span class="n">Elemental</span><span class="d">Conozco lo básico</span></label>
-
-    <input class="lv-radio" type="radio" name="level" id="lv-intermediate" value="intermediate">
-    <label class="lv-label" for="lv-intermediate"><span class="n">Intermedio</span><span class="d">Me comunico un poco</span></label>
-
-    <input class="lv-radio" type="radio" name="level" id="lv-advanced" value="advanced">
-    <label class="lv-label" for="lv-advanced"><span class="n">Avanzado</span><span class="d">Quiero perfeccionar</span></label>
+  <label class="ob-lbl">Nivel de inglés</label>
+  <div class="lv-wrap">
+    <div class="lv-grid">
+      <input type="radio" class="lv-r" name="lv" id="lv-b" value="beginner">
+      <label class="lv-l" for="lv-b"><span class="lv-n">Principiante</span><span class="lv-d">Sé muy poco inglés</span></label>
+      <input type="radio" class="lv-r" name="lv" id="lv-e" value="elementary">
+      <label class="lv-l" for="lv-e"><span class="lv-n">Elemental</span><span class="lv-d">Conozco lo básico</span></label>
+      <input type="radio" class="lv-r" name="lv" id="lv-i" value="intermediate" checked>
+      <label class="lv-l" for="lv-i"><span class="lv-n">Intermedio</span><span class="lv-d">Me comunico un poco</span></label>
+      <input type="radio" class="lv-r" name="lv" id="lv-a" value="advanced">
+      <label class="lv-l" for="lv-a"><span class="lv-n">Avanzado</span><span class="lv-d">Quiero perfeccionar</span></label>
+    </div>
   </div>
 
   <div class="ob-key">
-    <p>🔑 Usa <strong>Gemini AI</strong> de Google (gratis).<br>
+    <p>🔑 Gemini AI de Google (gratis)<br>
     1. Ve a <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com</a><br>
-    2. Crea tu API key &rarr; pégala aquí</p>
-    <input type="text" class="ob-input" id="inp-key" placeholder="Pega tu API key aquí" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" style="margin-bottom:0">
+    2. Crea tu API key y pégala aquí</p>
+    <input type="text" class="ob-in" id="inp-key" placeholder="AIza..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" style="margin-bottom:0">
   </div>
-
-  <button class="ob-cta" type="button" onclick="startApp()" style="margin-top:1rem">Comenzar →</button>
+  <button class="ob-cta" type="button" onclick="startApp()">Comenzar →</button>
 </div>
 
-<!-- ══ APP ═══════════════════════════════════════════════════ -->
+<!-- APP -->
 <div id="pg-app" class="page">
-
   <div class="topbar">
     <div class="tb-brand">
-      <img src="data:image/png;base64,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" alt="Improve" style="height:28px">
+      <img src="data:image/png;base64,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" alt="Improve" style="height:26px">
       <div class="tb-greet" id="tb-greet">Hola...</div>
     </div>
     <div class="tb-pills">
-      <div class="pill">🔥 <b id="p-streak">0</b></div>
-      <div class="pill">⚡ <b id="p-xp">0</b> XP</div>
+      <div class="pill">🔥 <b id="p-s">0</b></div>
+      <div class="pill">⚡ <b id="p-x">0</b> XP</div>
     </div>
   </div>
 
-  <div class="scroll" id="main-scroll">
-
+  <div class="scroll" id="scroll">
     <!-- HOME -->
     <div class="tab on" id="tab-home">
       <div class="streak-banner">
-        <div class="s-num" id="s-num">0</div>
-        <div class="s-info">
-          <h3 id="s-msg">¡Empieza hoy!</h3>
-          <p id="s-sub">Tu racha comienza aquí</p>
-        </div>
+        <div class="s-num" id="s-n">0</div>
+        <div class="s-info"><h3 id="s-m">Hola!</h3><p id="s-s">Practica cada día</p></div>
       </div>
-      <div class="stitle">Progreso</div>
       <div class="stat3">
-        <div class="stat-box"><div class="stat-v" id="h-words">0</div><div class="stat-l">Palabras</div></div>
-        <div class="stat-box"><div class="stat-v" id="h-acc">0%</div><div class="stat-l">Precisión</div></div>
-        <div class="stat-box"><div class="stat-v" id="h-min">0</div><div class="stat-l">Minutos</div></div>
+        <div class="stat-box"><div class="stat-v" id="hw">0</div><div class="stat-l">Palabras</div></div>
+        <div class="stat-box"><div class="stat-v" id="ha">0%</div><div class="stat-l">Precisión</div></div>
+        <div class="stat-box"><div class="stat-v" id="hm">0</div><div class="stat-l">Minutos</div></div>
       </div>
       <div class="stitle">Desafío de hoy</div>
-      <div class="chal-card">
-        <div class="chal-top"><span class="chal-name" id="dc-title">Cargando...</span><span class="xp-chip">+20 XP</span></div>
-        <div class="pbar"><div class="pfill" style="width:0%"></div></div>
-        <div style="font-size:13px;color:#8ba8b5;line-height:1.55;margin-bottom:14px" id="dc-desc">Preparando...</div>
+      <div class="chal">
+        <div class="chal-top"><span class="chal-name" id="dc-t">Cargando...</span><span class="xp-chip">+20 XP</span></div>
+        <div class="pbar"><div class="pfill" style="width:0"></div></div>
+        <div style="font-size:13px;color:#8ba8b5;line-height:1.55;margin-bottom:14px" id="dc-d">Preparando tu desafío...</div>
         <button class="btn btn-g btn-sm" onclick="switchTab('quiz')">Ir al desafío →</button>
       </div>
       <div class="stitle">Continuar</div>
       <div class="grid2">
-        <div class="qcard" onclick="switchTab('vocab')"><div class="qcard-icon">📚</div><h4>Vocabulario</h4><p>Aprende palabras nuevas</p></div>
-        <div class="qcard" onclick="switchTab('speak')"><div class="qcard-icon">🎤</div><h4>Hablar</h4><p>Practica pronunciación</p></div>
-        <div class="qcard" onclick="switchTab('phrases')"><div class="qcard-icon">💬</div><h4>Frases</h4><p>Situaciones reales</p></div>
-        <div class="qcard" onclick="switchTab('correct')"><div class="qcard-icon">✏️</div><h4>Corregir</h4><p>La IA te corrige</p></div>
+        <div class="qcard" onclick="switchTab('vocab')"><div class="qcard-ic">📚</div><h4>Vocabulario</h4><p>Aprende palabras nuevas</p></div>
+        <div class="qcard" onclick="switchTab('speak')"><div class="qcard-ic">🎤</div><h4>Hablar</h4><p>Practica pronunciación</p></div>
+        <div class="qcard" onclick="switchTab('phrases')"><div class="qcard-ic">💬</div><h4>Frases</h4><p>Situaciones reales</p></div>
+        <div class="qcard" onclick="switchTab('correct')"><div class="qcard-ic">✏️</div><h4>Corregir</h4><p>La IA te corrige</p></div>
       </div>
     </div>
 
     <!-- VOCAB -->
     <div class="tab" id="tab-vocab">
-      <div class="cat-row" id="vocab-cats"></div>
+      <div class="cat-row" id="vcats"></div>
       <div class="card">
         <div class="word-hero">
-          <div class="word-badge" id="w-badge">Básico</div>
-          <div class="word-big" id="w-en">house</div>
-          <div class="word-pron" id="w-pron">/haʊs/</div>
-          <div class="word-es" id="w-es">casa</div>
-          <div class="word-ex" id="w-ex">This is a big <strong>house</strong>.</div>
+          <div class="w-badge" id="wb">Básico</div>
+          <div class="w-big" id="wen">house</div>
+          <div class="w-pron" id="wpr">/haʊs/</div>
+          <div class="w-es" id="wes">casa</div>
+          <div class="w-ex" id="wex">This is a big <strong>house</strong>.</div>
         </div>
         <div class="btn-row">
-          <button class="btn btn-gh" onclick="prevWord()">← Ant</button>
-          <button class="btn btn-gh" onclick="speakWord()">🔊</button>
-          <button class="btn btn-g" onclick="nextWord()">Sig →</button>
+          <button class="btn btn-gh" onclick="prevW()">← Ant</button>
+          <button class="btn btn-gh" onclick="speakW()">🔊</button>
+          <button class="btn btn-g" onclick="nextW()">Sig →</button>
         </div>
         <div class="btn-row" style="margin-top:6px">
-          <button class="btn btn-gh btn-sm" onclick="explainWord()">✨ Explicar</button>
-          <button class="btn btn-gh btn-sm" onclick="practiceWord()">🎤 Pronunciar</button>
+          <button class="btn btn-gh btn-sm" onclick="explainW()">✨ Explicar</button>
+          <button class="btn btn-gh btn-sm" onclick="practiceW()">🎤 Pronunciar</button>
         </div>
       </div>
-      <div id="ai-word-box" style="display:none" class="card">
+      <div id="wai" style="display:none" class="card">
         <div class="stitle" style="margin-top:0">Explicación IA</div>
-        <div id="ai-word-txt" class="ai-box"></div>
+        <div id="wait" class="ai-box"></div>
       </div>
     </div>
 
@@ -333,37 +280,37 @@ html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:'Plus Jak
     <div class="tab" id="tab-quiz">
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-          <span style="font-size:15px;font-weight:700">Desafío IA</span>
-          <span class="xp-chip" id="qz-xp">+10 XP</span>
+          <span style="font-size:15px;font-weight:700">Quiz IA</span>
+          <span class="xp-chip" id="qxp">+15 XP</span>
         </div>
-        <div class="pbar"><div class="pfill" id="qz-prog" style="width:0%"></div></div>
-        <div class="quiz-q" id="qz-q">Cargando...</div>
-        <div class="quiz-opts" id="qz-opts"></div>
-        <div class="qfb" id="qz-fb"></div>
-        <div class="loading-txt" id="qz-load" style="display:none"><span class="dots">Generando</span></div>
+        <div class="pbar"><div class="pfill" id="qprog" style="width:0"></div></div>
+        <div class="q-txt" id="qtxt">Cargando pregunta...</div>
+        <div class="q-opts" id="qopts"></div>
+        <div class="q-fb" id="qfb"></div>
+        <div class="ldg" id="qldg" style="display:none"><span class="dots">Generando</span></div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-gh" onclick="genQuiz()">🎲 Nueva pregunta</button>
-        <button class="btn btn-g btn-sm" id="btn-nxt" onclick="genQuiz()" style="display:none">Siguiente →</button>
+        <button class="btn btn-gh" onclick="loadQuiz()">🎲 Nueva pregunta</button>
+        <button class="btn btn-g btn-sm" id="qnxt" onclick="loadQuiz()" style="display:none">Siguiente →</button>
       </div>
     </div>
 
     <!-- SPEAK -->
     <div class="tab" id="tab-speak">
       <div class="card">
-        <div class="speak-hero">
-          <div class="speak-lbl">Pronuncia esta frase</div>
-          <div class="speak-phrase" id="sp-phrase">Good morning! How are you today?</div>
-          <div class="speak-es" id="sp-es">Buenos días, ¿cómo estás hoy?</div>
+        <div class="speak-c">
+          <div class="sp-lbl">Pronuncia esta frase</div>
+          <div class="sp-ph" id="spph">Good morning! How are you today?</div>
+          <div class="sp-es" id="spes">Buenos días, ¿cómo estás hoy?</div>
           <div style="display:flex;justify-content:center;margin-bottom:14px">
             <button class="btn-mic" id="sp-mic" onclick="toggleSpeak()">🎤</button>
           </div>
-          <div class="sp-trans" id="sp-trans"></div>
-          <div class="sp-res" id="sp-res"></div>
+          <div class="sp-tr" id="sptr"></div>
+          <div class="sp-res" id="spres"></div>
         </div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-gh" onclick="speakPhrase()">🔊 Escuchar</button>
+        <button class="btn btn-gh" onclick="listenPhrase()">🔊 Escuchar</button>
         <button class="btn btn-gh" onclick="nextPhrase()">🔄 Nueva</button>
         <button class="btn btn-gh btn-sm" onclick="aiPhrase()">✨ IA</button>
       </div>
@@ -371,30 +318,30 @@ html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:'Plus Jak
 
     <!-- PHRASES -->
     <div class="tab" id="tab-phrases">
-      <div class="cat-row" id="phrase-cats"></div>
-      <div id="phrases-list"></div>
+      <div class="cat-row" id="pcats"></div>
+      <div id="plist"></div>
       <div class="btn-row">
-        <button class="btn btn-gh" onclick="morePhrases()">✨ Más frases con IA</button>
+        <button class="btn btn-gh" onclick="morePhrases()">✨ Más con IA</button>
       </div>
-      <div id="ph-load" style="display:none;text-align:center;padding:.75rem;font-size:13px;color:#8ba8b5"><span class="dots">Generando</span></div>
+      <div id="pldg" style="display:none;text-align:center;padding:.75rem" class="ldg"><span class="dots">Generando</span></div>
     </div>
 
     <!-- CORRECT -->
     <div class="tab" id="tab-correct">
       <div class="card">
-        <div class="stitle" style="margin-top:0">Escribe en inglés</div>
-        <textarea class="corr-ta" id="corr-in" placeholder="Write anything in English and AI will correct it..."></textarea>
+        <div class="stitle" style="margin-top:0">Escribe en inglés — la IA te corrige</div>
+        <textarea class="c-ta" id="cta" placeholder="Write anything in English here..."></textarea>
         <div class="btn-row" style="margin-top:10px;justify-content:flex-start">
           <button class="btn btn-g btn-sm" onclick="doCorrect()">✨ Corregir</button>
           <button class="btn btn-gh btn-sm" onclick="dictate()">🎤 Dictar</button>
-          <button class="btn btn-gh btn-sm" onclick="clearCorr()">Limpiar</button>
+          <button class="btn btn-gh btn-sm" onclick="document.getElementById('cta').value='';document.getElementById('cres-c').style.display='none'">Limpiar</button>
         </div>
       </div>
-      <div id="corr-res-card" style="display:none" class="card">
+      <div id="cres-c" style="display:none" class="card">
         <div class="stitle" style="margin-top:0">Corrección</div>
-        <div class="corr-result" id="corr-res"></div>
+        <div class="c-res" id="cres"></div>
       </div>
-      <div id="corr-load" style="display:none;text-align:center;padding:.6rem;font-size:13px;color:#8ba8b5"><span class="dots">Analizando</span></div>
+      <div id="cldg" style="display:none" class="ldg"><span class="dots">Analizando</span></div>
     </div>
 
     <!-- CHAT -->
@@ -402,902 +349,611 @@ html,body{min-height:100%;background:#111e25;color:#f2f7f5;font-family:'Plus Jak
       <div class="chat-msgs" id="chat-msgs"></div>
     </div>
 
-  </div><!-- end scroll -->
+    <!-- SETTINGS -->
+    <div class="tab" id="tab-settings">
+      <div class="card">
+        <div class="stitle" style="margin-top:0">Tu perfil</div>
+        <div class="set-row">
+          <span class="set-lbl">Nombre</span>
+          <span class="set-val" id="set-name">—</span>
+        </div>
+        <div class="set-row">
+          <span class="set-lbl">Nivel actual</span>
+          <span class="set-val" id="set-lvl">—</span>
+        </div>
+        <div class="set-row" style="border:none">
+          <span class="set-lbl">Cambiar nivel</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+          <button class="btn btn-gh btn-sm" onclick="changeLvl('beginner')">Principiante</button>
+          <button class="btn btn-gh btn-sm" onclick="changeLvl('elementary')">Elemental</button>
+          <button class="btn btn-gh btn-sm" onclick="changeLvl('intermediate')">Intermedio</button>
+          <button class="btn btn-gh btn-sm" onclick="changeLvl('advanced')">Avanzado</button>
+        </div>
+      </div>
+      <div class="card" style="margin-top:4px">
+        <div class="stitle" style="margin-top:0">Estadísticas</div>
+        <div class="set-row"><span class="set-lbl">XP total</span><span class="set-val" id="set-xp">0</span></div>
+        <div class="set-row"><span class="set-lbl">Racha</span><span class="set-val" id="set-str">0 días</span></div>
+        <div class="set-row"><span class="set-lbl">Palabras vistas</span><span class="set-val" id="set-w">0</span></div>
+        <div class="set-row" style="border:none"><span class="set-lbl">Precisión quiz</span><span class="set-val" id="set-a">0%</span></div>
+      </div>
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn btn-gh btn-sm" style="color:#ff6b6b;border-color:rgba(255,107,107,.3)" onclick="resetApp()">Reiniciar app</button>
+      </div>
+    </div>
+  </div>
 
+  <!-- CHAT BAR -->
   <div class="chat-bar" id="chat-bar" style="display:none">
-    <button class="chat-mic" id="chat-mic-btn" onclick="toggleChatMic()">🎤</button>
-    <input type="text" class="chat-in" id="chat-in" placeholder="Escribe o habla..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="chat-send" onclick="sendChat()">↑</button>
+    <button class="c-mic" id="cmicbtn" onclick="toggleChatMic()">🎤</button>
+    <input type="text" class="chat-in" id="chat-in" placeholder="Escribe o habla en inglés..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="c-send" onclick="sendChat()">↑</button>
   </div>
 
   <div class="bnav">
-    <button class="ni on" data-tab="home" onclick="switchTab('home')"><span class="ni-icon">🏠</span><span class="ni-lbl">Inicio</span></button>
-    <button class="ni" data-tab="vocab" onclick="switchTab('vocab')"><span class="ni-icon">📚</span><span class="ni-lbl">Vocab</span></button>
-    <button class="ni" data-tab="quiz" onclick="switchTab('quiz')"><span class="ni-icon">⚡</span><span class="ni-lbl">Quiz</span></button>
-    <button class="ni" data-tab="speak" onclick="switchTab('speak')"><span class="ni-icon">🎤</span><span class="ni-lbl">Hablar</span></button>
-    <button class="ni" data-tab="chat" onclick="switchTab('chat')"><span class="ni-icon">🤖</span><span class="ni-lbl">Tutor</span></button>
+    <button class="ni on" data-t="home" onclick="switchTab('home')"><span class="ni-ic">🏠</span><span class="ni-lb">Inicio</span></button>
+    <button class="ni" data-t="vocab" onclick="switchTab('vocab')"><span class="ni-ic">📚</span><span class="ni-lb">Vocab</span></button>
+    <button class="ni" data-t="quiz" onclick="switchTab('quiz')"><span class="ni-ic">⚡</span><span class="ni-lb">Quiz</span></button>
+    <button class="ni" data-t="speak" onclick="switchTab('speak')"><span class="ni-ic">🎤</span><span class="ni-lb">Hablar</span></button>
+    <button class="ni" data-t="chat" onclick="switchTab('chat')"><span class="ni-ic">🤖</span><span class="ni-lb">Tutor</span></button>
+    <button class="ni" data-t="settings" onclick="switchTab('settings')"><span class="ni-ic">⚙️</span><span class="ni-lb">Perfil</span></button>
   </div>
 </div>
 
-<!-- MIC OVERLAY -->
-<div class="mic-ov" id="mic-ov">
-  <div class="mic-ov-pulse">🎤</div>
-  <div class="mic-ov-lbl">Escuchando en inglés...</div>
-  <div class="mic-ov-txt" id="mic-ov-txt"></div>
+<div class="mic-ov" id="micov">
+  <div class="mic-pulse">🎤</div>
+  <div style="font-size:14px;color:#8ba8b5">Escuchando en inglés...</div>
+  <div class="mic-txt" id="mictxt"></div>
   <button class="btn btn-gh btn-sm" onclick="stopRec()">Cancelar</button>
 </div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── STATE ─────────────────────────────────────────────────
-const S = {
-  name:'', level:'beginner', apiKey:'',
-  xp:0, streak:0, wordsViewed:0, quizTotal:0, quizCorrect:0, minutes:0,
-  vocabCat:'basico', wordIdx:0, phraseCat:'saludos',
-  chatHistory:[], rec:null, recMode:null, startTime:Date.now()
-};
+// ── STATE ──────────────────────────────────────────────────
+var S = {name:"",level:"intermediate",apiKey:"",xp:0,streak:0,words:0,qTotal:0,qRight:0,mins:0,vCat:"basico",vIdx:0,pCat:"saludos",history:[],rec:null,recMode:null,t0:Date.now()};
 
-// ── ONBOARD ───────────────────────────────────────────────
-function selLv(lv) {
-  document.querySelectorAll('.lv-radio').forEach(r => r.checked = false);
-  const el = document.getElementById('lv-' + lv);
-  if(el) el.checked = true;
-  S.level = lv;
-}
-
-function startApp() {
-  const name = document.getElementById('inp-name').value.trim();
-  const key  = document.getElementById('inp-key').value.trim();
-  const lvlEl = document.querySelector('input[name="level"]:checked');
-  const lvl = lvlEl ? lvlEl.value : 'intermediate';
-  S.name = name || 'Usuario';
-  S.apiKey = key;
-  S.level = lvl;
-  S.streak = 1;
-  save();
-  goApp();
-}
-
-function goApp() {
-  document.getElementById('pg-onboard').classList.remove('on');
-  document.getElementById('pg-app').classList.add('on');
-  initApp();
-}
-
-// ── DATA ──────────────────────────────────────────────────
-const VOCAB = {
+// ── DATA ───────────────────────────────────────────────────
+var VOCAB = {
   basico:[
-    {en:'house',pron:'/haʊs/',es:'casa',ex:'This is a big <strong>house</strong>.'},
-    {en:'dog',pron:'/dɒɡ/',es:'perro',ex:'The <strong>dog</strong> is very friendly.'},
-    {en:'water',pron:'/ˈwɔːtər/',es:'agua',ex:'I drink <strong>water</strong> every day.'},
-    {en:'book',pron:'/bʊk/',es:'libro',ex:'She reads a <strong>book</strong> before bed.'},
-    {en:'car',pron:'/kɑːr/',es:'auto',ex:'My <strong>car</strong> is red.'},
-    {en:'food',pron:'/fuːd/',es:'comida',ex:'The <strong>food</strong> smells delicious.'},
-    {en:'friend',pron:'/frɛnd/',es:'amigo/a',ex:'She is my best <strong>friend</strong>.'},
-    {en:'work',pron:'/wɜːrk/',es:'trabajo',ex:'I go to <strong>work</strong> at 8 AM.'},
-    {en:'time',pron:'/taɪm/',es:'tiempo/hora',ex:'What <strong>time</strong> is it?'},
-    {en:'family',pron:'/ˈfæmɪli/',es:'familia',ex:'My <strong>family</strong> is very big.'},
+    {en:"house",pr:"/haʊs/",es:"casa",ex:"This is a big <strong>house</strong>."},
+    {en:"dog",pr:"/dɒɡ/",es:"perro",ex:"The <strong>dog</strong> is friendly."},
+    {en:"water",pr:"/ˈwɔːtər/",es:"agua",ex:"I drink <strong>water</strong> every day."},
+    {en:"book",pr:"/bʊk/",es:"libro",ex:"She reads a <strong>book</strong> at night."},
+    {en:"car",pr:"/kɑːr/",es:"auto",ex:"My <strong>car</strong> is red."},
+    {en:"food",pr:"/fuːd/",es:"comida",ex:"The <strong>food</strong> smells great."},
+    {en:"friend",pr:"/frɛnd/",es:"amigo/a",ex:"She is my best <strong>friend</strong>."},
+    {en:"work",pr:"/wɜːrk/",es:"trabajo",ex:"I go to <strong>work</strong> at 8 AM."},
+    {en:"time",pr:"/taɪm/",es:"tiempo",ex:"What <strong>time</strong> is it?"},
+    {en:"family",pr:"/ˈfæmɪli/",es:"familia",ex:"My <strong>family</strong> is very big."}
   ],
   viajes:[
-    {en:'airport',pron:'/ˈɛrpɔːrt/',es:'aeropuerto',ex:'We arrived at the <strong>airport</strong> early.'},
-    {en:'passport',pron:'/ˈpæspɔːrt/',es:'pasaporte',ex:'Don\'t forget your <strong>passport</strong>.'},
-    {en:'hotel',pron:'/hoʊˈtɛl/',es:'hotel',ex:'The <strong>hotel</strong> has a great view.'},
-    {en:'ticket',pron:'/ˈtɪkɪt/',es:'boleto',ex:'I bought a plane <strong>ticket</strong>.'},
-    {en:'luggage',pron:'/ˈlʌɡɪdʒ/',es:'equipaje',ex:'My <strong>luggage</strong> is too heavy.'},
-    {en:'flight',pron:'/flaɪt/',es:'vuelo',ex:'The <strong>flight</strong> departs at 6 AM.'},
+    {en:"airport",pr:"/ˈɛrpɔːrt/",es:"aeropuerto",ex:"We arrived at the <strong>airport</strong> early."},
+    {en:"passport",pr:"/ˈpæspɔːrt/",es:"pasaporte",ex:"Show me your <strong>passport</strong>."},
+    {en:"hotel",pr:"/hoʊˈtɛl/",es:"hotel",ex:"The <strong>hotel</strong> has a great view."},
+    {en:"ticket",pr:"/ˈtɪkɪt/",es:"boleto",ex:"I bought a plane <strong>ticket</strong>."},
+    {en:"luggage",pr:"/ˈlʌɡɪdʒ/",es:"equipaje",ex:"My <strong>luggage</strong> is too heavy."},
+    {en:"flight",pr:"/flaɪt/",es:"vuelo",ex:"The <strong>flight</strong> departs at 6 AM."}
   ],
   negocios:[
-    {en:'meeting',pron:'/ˈmiːtɪŋ/',es:'reunión',ex:'The <strong>meeting</strong> starts at 10.'},
-    {en:'deadline',pron:'/ˈdɛdlaɪn/',es:'fecha límite',ex:'The <strong>deadline</strong> is Friday.'},
-    {en:'budget',pron:'/ˈbʌdʒɪt/',es:'presupuesto',ex:'We need to review the <strong>budget</strong>.'},
-    {en:'report',pron:'/rɪˈpɔːrt/',es:'informe',ex:'Please send the <strong>report</strong> by email.'},
-    {en:'proposal',pron:'/prəˈpoʊzəl/',es:'propuesta',ex:'The client approved our <strong>proposal</strong>.'},
+    {en:"meeting",pr:"/ˈmiːtɪŋ/",es:"reunión",ex:"The <strong>meeting</strong> starts at 10."},
+    {en:"deadline",pr:"/ˈdɛdlaɪn/",es:"fecha límite",ex:"The <strong>deadline</strong> is Friday."},
+    {en:"budget",pr:"/ˈbʌdʒɪt/",es:"presupuesto",ex:"We need to review the <strong>budget</strong>."},
+    {en:"report",pr:"/rɪˈpɔːrt/",es:"informe",ex:"Please send the <strong>report</strong> today."},
+    {en:"proposal",pr:"/prəˈpoʊzəl/",es:"propuesta",ex:"The client approved our <strong>proposal</strong>."}
   ],
   emociones:[
-    {en:'happy',pron:'/ˈhæpi/',es:'feliz',ex:'I feel <strong>happy</strong> today.'},
-    {en:'worried',pron:'/ˈwʌrid/',es:'preocupado/a',ex:'She looks very <strong>worried</strong>.'},
-    {en:'excited',pron:'/ɪkˈsaɪtɪd/',es:'emocionado/a',ex:'The kids are <strong>excited</strong>.'},
-    {en:'proud',pron:'/praʊd/',es:'orgulloso/a',ex:'I am <strong>proud</strong> of you.'},
-    {en:'nervous',pron:'/ˈnɜːrvəs/',es:'nervioso/a',ex:'He is <strong>nervous</strong> before the interview.'},
+    {en:"happy",pr:"/ˈhæpi/",es:"feliz",ex:"I feel <strong>happy</strong> today."},
+    {en:"worried",pr:"/ˈwʌrid/",es:"preocupado",ex:"She looks very <strong>worried</strong>."},
+    {en:"excited",pr:"/ɪkˈsaɪtɪd/",es:"emocionado",ex:"The kids are <strong>excited</strong>."},
+    {en:"proud",pr:"/praʊd/",es:"orgulloso",ex:"I am <strong>proud</strong> of you."},
+    {en:"nervous",pr:"/ˈnɜːrvəs/",es:"nervioso",ex:"He is <strong>nervous</strong> today."}
   ],
   tecnologia:[
-    {en:'software',pron:'/ˈsɒftweər/',es:'software',ex:'We need to update the <strong>software</strong>.'},
-    {en:'network',pron:'/ˈnɛtwɜːrk/',es:'red',ex:'The <strong>network</strong> is down.'},
-    {en:'database',pron:'/ˈdeɪtəbeɪs/',es:'base de datos',ex:'The <strong>database</strong> stores all records.'},
-    {en:'server',pron:'/ˈsɜːrvər/',es:'servidor',ex:'The <strong>server</strong> is running fine.'},
+    {en:"software",pr:"/ˈsɒftweər/",es:"software",ex:"Update the <strong>software</strong>."},
+    {en:"network",pr:"/ˈnɛtwɜːrk/",es:"red",ex:"The <strong>network</strong> is down."},
+    {en:"database",pr:"/ˈdeɪtəbeɪs/",es:"base de datos",ex:"Check the <strong>database</strong>."},
+    {en:"server",pr:"/ˈsɜːrvər/",es:"servidor",ex:"The <strong>server</strong> is running."}
   ]
 };
 
-const PHRASES = {
+var PHRASES = {
   saludos:[
-    {en:'Good morning! How are you?',es:'¡Buenos días! ¿Cómo estás?'},
-    {en:'Nice to meet you!',es:'¡Mucho gusto!'},
-    {en:'How have you been lately?',es:'¿Cómo has estado últimamente?'},
-    {en:'It\'s great to see you again!',es:'¡Qué bueno verte de nuevo!'},
+    {en:"Good morning! How are you?",es:"Buenos días, ¿cómo estás?"},
+    {en:"Nice to meet you!",es:"Mucho gusto"},
+    {en:"How have you been lately?",es:"¿Cómo has estado?"},
+    {en:"Great to see you again!",es:"Qué bueno verte de nuevo"}
   ],
   restaurante:[
-    {en:'I\'d like to order, please.',es:'Quisiera ordenar, por favor.'},
-    {en:'Could I see the menu?',es:'¿Me puede traer el menú?'},
-    {en:'The bill, please.',es:'La cuenta, por favor.'},
-    {en:'Is this dish spicy?',es:'¿Este plato es picante?'},
+    {en:"I would like to order, please.",es:"Quisiera ordenar"},
+    {en:"Could I see the menu?",es:"¿Me trae el menú?"},
+    {en:"The bill, please.",es:"La cuenta"},
+    {en:"Is this dish spicy?",es:"¿Es picante?"}
   ],
   trabajo:[
-    {en:'Could we schedule a meeting?',es:'¿Podemos agendar una reunión?'},
-    {en:'I\'ll get back to you on that.',es:'Te respondo sobre eso después.'},
-    {en:'I\'m working on it.',es:'Lo estoy trabajando.'},
-    {en:'Could you clarify that point?',es:'¿Puedes aclarar ese punto?'},
+    {en:"Can we schedule a meeting?",es:"¿Podemos agendar una reunión?"},
+    {en:"I will get back to you on that.",es:"Te respondo después"},
+    {en:"I am working on it.",es:"Lo estoy trabajando"},
+    {en:"Could you clarify that?",es:"¿Puedes aclararlo?"}
   ],
   emergencias:[
-    {en:'Call an ambulance!',es:'¡Llamen una ambulancia!'},
-    {en:'I need help!',es:'¡Necesito ayuda!'},
-    {en:'Where is the nearest hospital?',es:'¿Dónde está el hospital más cercano?'},
-    {en:'I lost my passport.',es:'Perdí mi pasaporte.'},
+    {en:"Call an ambulance!",es:"Llamen una ambulancia"},
+    {en:"I need help!",es:"Necesito ayuda"},
+    {en:"Where is the hospital?",es:"¿Dónde está el hospital?"},
+    {en:"I lost my passport.",es:"Perdí mi pasaporte"}
   ]
 };
 
-const SPEAK_P = [
-  {en:'Good morning! How are you today?',es:'¡Buenos días! ¿Cómo estás hoy?'},
-  {en:'Could you speak more slowly, please?',es:'¿Podrías hablar más despacio, por favor?'},
-  {en:'I don\'t understand. Can you repeat that?',es:'No entiendo. ¿Puedes repetirlo?'},
-  {en:'The weather is beautiful today.',es:'El clima está hermoso hoy.'},
-  {en:'I would like a cup of coffee, please.',es:'Quisiera una taza de café, por favor.'},
-  {en:'Where is the nearest bus stop?',es:'¿Dónde está la parada de bus más cercana?'},
-  {en:'I am very happy to be here.',es:'Estoy muy feliz de estar aquí.'},
-  {en:'How much does this cost?',es:'¿Cuánto cuesta esto?'},
+var SPEAK_LIST = [
+  {en:"Good morning! How are you today?",es:"Buenos días, ¿cómo estás hoy?"},
+  {en:"Could you speak more slowly please?",es:"¿Podrías hablar más despacio?"},
+  {en:"I do not understand. Can you repeat that?",es:"No entiendo. ¿Puedes repetirlo?"},
+  {en:"The weather is beautiful today.",es:"El clima está hermoso hoy"},
+  {en:"I would like a coffee please.",es:"Quisiera un café"},
+  {en:"Where is the nearest bus stop?",es:"¿Dónde está la parada de bus?"},
+  {en:"I am very happy to be here.",es:"Estoy muy feliz de estar aquí"},
+  {en:"How much does this cost?",es:"¿Cuánto cuesta esto?"}
 ];
-let spIdx = 0;
+var spIdx = 0;
+var curQuiz = null;
+var qCount = 0;
 
-// ── GEMINI ────────────────────────────────────────────────
-async function gemini(prompt) {
-  const r = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${S.apiKey}`,
-    {method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:600}})});
-  if(!r.ok) throw new Error('API error');
-  const d = await r.json();
-  return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
+// ── GEMINI ─────────────────────────────────────────────────
+async function ai(prompt) {
+  var r = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + S.apiKey,
+    {method:"POST", headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({contents:[{role:"user",parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:600}})}
+  );
+  if(!r.ok) throw new Error("Gemini error " + r.status);
+  var d = await r.json();
+  return d.candidates[0].content.parts[0].text || "";
 }
 
-async function geminiChat(msgs) {
-  const contents = msgs.map(m => ({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
-  const r = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${S.apiKey}`,
-    {method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        contents,
-        systemInstruction:{parts:[{text:`Eres un tutor de inglés amigable para ${S.name}, nivel ${S.level}. Responde en español cuando hablen español, en inglés con traducción cuando practiquen. Sé conciso, práctico, motivador. Corrige amablemente. Usa emojis con moderación.`}]},
-        generationConfig:{maxOutputTokens:500}
-      })});
-  if(!r.ok) throw new Error('error');
-  const d = await r.json();
-  return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
+async function aiChat(msgs) {
+  var contents = msgs.map(function(m){return {role:m.role==="assistant"?"model":"user",parts:[{text:m.content}]};});
+  var sysPrompt = "You are an enthusiastic English tutor for " + S.name + " who is at " + S.level + " level. ALWAYS start by speaking English and greeting them warmly. Conduct the conversation mostly in English, but explain grammar rules in Spanish when needed. Correct their English mistakes gently inline. If they write in Spanish, respond in both Spanish and English. Keep responses concise and conversational. End each message with a question or task to keep them practicing.";
+  var r = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + S.apiKey,
+    {method:"POST", headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({contents:contents, systemInstruction:{parts:[{text:sysPrompt}]}, generationConfig:{maxOutputTokens:500}})}
+  );
+  if(!r.ok) throw new Error("error");
+  var d = await r.json();
+  return d.candidates[0].content.parts[0].text || "";
 }
 
-// ── ONBOARD ───────────────────────────────────────────────
-function selLevel(level) {
-  document.querySelectorAll('.level-opt').forEach(x => x.classList.remove('sel'));
-  const el = document.getElementById('lv-' + level);
-  if(el) el.classList.add('sel');
-}
-
+// ── ONBOARD ────────────────────────────────────────────────
 function startApp() {
-  const name = document.getElementById('inp-name').value.trim();
-  const key = document.getElementById('inp-key').value.trim();
-  const selEl = document.querySelector('.level-opt.sel'); const lvl = selEl ? selEl.id.replace('lv-','') : 'beginner';
-  if(!name) { toast('Ingresa tu nombre 👋','info'); return; }
-  if(!key || !key.startsWith('AIza')) { toast('Ingresa tu Gemini API key','info'); return; }
-  S.name = name; S.apiKey = key; S.level = lvl; S.streak = 1;
-  save();
-  go();
-}
-
-function go() {
-  document.getElementById('screen-onboard').classList.remove('active');
-  document.getElementById('screen-app').classList.add('active');
+  var name = document.getElementById("inp-name").value.trim();
+  var key = document.getElementById("inp-key").value.trim();
+  var lvlEl = document.querySelector("input[name='lv']:checked");
+  S.name = name || "Estudiante";
+  S.apiKey = key;
+  S.level = lvlEl ? lvlEl.value : "intermediate";
+  S.streak = 1;
+  saveState();
+  document.getElementById("pg-ob").classList.remove("on");
+  document.getElementById("pg-app").classList.add("on");
   initApp();
 }
 
-// ── INIT ──────────────────────────────────────────────────
+// ── INIT ───────────────────────────────────────────────────
 function initApp() {
-  const h = new Date().getHours();
-  const g = h<12?'Buenos días':h<19?'Buenas tardes':'Buenas noches';
-  document.getElementById('tb-greet').textContent = `${g}, ${S.name} 👋`;
+  var h = new Date().getHours();
+  var g = h<12 ? "Buenos días" : h<19 ? "Buenas tardes" : "Buenas noches";
+  document.getElementById("tb-greet").textContent = g + ", " + S.name + " 👋";
   updateStats();
   renderVocabCats(); showWord();
   renderPhraseCats(); renderPhrases();
-  loadSpeak();
-  genQuiz();
+  loadSpeakPhrase();
+  loadQuiz();
   loadChallenge();
   startTimer();
-  setTimeout(() => addMsg('ai',`¡Hola ${S.name}! 👋 Soy tu tutor de inglés. Escríbeme o usa el micrófono 🎤 para practicar conversación, preguntarme gramática o que te explique algo.`), 200);
+  updateSettings();
+  // Tutor greeting in English immediately
+  setTimeout(function() {
+    var greet = "Hi " + S.name + "! 🎉 Welcome to Improve! I'm your AI English tutor. Let's practice together!\n\nI can see you're at " + S.level + " level — that's great! We're going to have real conversations, I'll correct your mistakes gently, and help you sound more natural.\n\nSo, tell me: **what do you want to talk about today?** Or try saying something in English and I'll respond! 😊";
+    addMsg("ai", greet);
+  }, 300);
 }
 
-function save() {
-  try { localStorage.setItem('imp2',JSON.stringify({name:S.name,level:S.level,apiKey:S.apiKey,xp:S.xp,streak:S.streak,wordsViewed:S.wordsViewed,quizTotal:S.quizTotal,quizCorrect:S.quizCorrect,minutes:S.minutes,lastDate:new Date().toDateString()})); } catch(e){}
-}
-
-function load() {
+function saveState() {
   try {
-    const d = JSON.parse(localStorage.getItem('imp2')||'{}');
-    if(d.name && d.apiKey) { Object.assign(S,d); return true; }
+    localStorage.setItem("imp4", JSON.stringify({
+      name:S.name, level:S.level, apiKey:S.apiKey,
+      xp:S.xp, streak:S.streak, words:S.words,
+      qTotal:S.qTotal, qRight:S.qRight, mins:S.mins,
+      lastDate:new Date().toDateString()
+    }));
+  } catch(e){}
+}
+
+function loadState() {
+  try {
+    var d = JSON.parse(localStorage.getItem("imp4") || "{}");
+    if(d.name && d.apiKey) { Object.assign(S, d); return true; }
   } catch(e){}
   return false;
 }
 
 function updateStats() {
-  document.getElementById('p-streak').textContent = S.streak;
-  document.getElementById('p-xp').textContent = S.xp;
-  document.getElementById('s-num').textContent = S.streak;
-  document.getElementById('s-msg').textContent = S.streak>0?`¡${S.streak} día${S.streak!==1?'s':''} seguido${S.streak!==1?'s':''}, ${S.name}!`:`¡Empieza hoy, ${S.name}!`;
-  document.getElementById('s-sub').textContent = S.streak>0?'Sigue así, vas muy bien 🔥':'Tu racha comienza aquí';
-  document.getElementById('h-words').textContent = S.wordsViewed;
-  document.getElementById('h-acc').textContent = S.quizTotal>0?Math.round(S.quizCorrect/S.quizTotal*100)+'%':'0%';
-  document.getElementById('h-min').textContent = S.minutes;
+  document.getElementById("p-s").textContent = S.streak;
+  document.getElementById("p-x").textContent = S.xp;
+  document.getElementById("s-n").textContent = S.streak;
+  document.getElementById("s-m").textContent = S.streak > 0 ? S.streak + (S.streak===1?" día":" días") + " seguidos, " + S.name + "! 🔥" : "Hola " + S.name + "!";
+  document.getElementById("s-s").textContent = S.streak > 0 ? "Sigue así, vas muy bien" : "Tu racha comienza hoy";
+  document.getElementById("hw").textContent = S.words;
+  document.getElementById("ha").textContent = S.qTotal > 0 ? Math.round(S.qRight/S.qTotal*100)+"%" : "0%";
+  document.getElementById("hm").textContent = S.mins;
 }
 
-function addXP(n) { S.xp+=n; save(); updateStats(); toast(`+${n} XP ⚡`,'ok'); }
+function updateSettings() {
+  var lvlNames = {beginner:"Principiante",elementary:"Elemental",intermediate:"Intermedio",advanced:"Avanzado"};
+  document.getElementById("set-name").textContent = S.name;
+  document.getElementById("set-lvl").textContent = lvlNames[S.level] || S.level;
+  document.getElementById("set-xp").textContent = S.xp;
+  document.getElementById("set-str").textContent = S.streak + " días";
+  document.getElementById("set-w").textContent = S.words;
+  document.getElementById("set-a").textContent = S.qTotal > 0 ? Math.round(S.qRight/S.qTotal*100)+"%" : "0%";
+}
+
+function changeLvl(lv) {
+  S.level = lv;
+  saveState(); updateSettings();
+  var names = {beginner:"Principiante",elementary:"Elemental",intermediate:"Intermedio",advanced:"Avanzado"};
+  toast("Nivel cambiado a " + names[lv] + " ✅", "ok");
+}
+
+function addXP(n) { S.xp += n; saveState(); updateStats(); toast("+" + n + " XP ⚡", "ok"); }
 
 function startTimer() {
-  setInterval(()=>{S.minutes=Math.floor((Date.now()-S.startTime)/60000);document.getElementById('h-min').textContent=S.minutes;save();},30000);
+  setInterval(function(){
+    S.mins = Math.floor((Date.now()-S.t0)/60000);
+    document.getElementById("hm").textContent = S.mins;
+    saveState();
+  }, 30000);
 }
 
-// ── TABS ──────────────────────────────────────────────────
+function resetApp() {
+  if(confirm("¿Reiniciar todo? Se borrarán tus datos.")) {
+    localStorage.removeItem("imp4");
+    location.reload();
+  }
+}
+
+// ── TABS ───────────────────────────────────────────────────
 function switchTab(t) {
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.ni').forEach(x=>x.classList.remove('active'));
-  document.getElementById('tab-'+t)?.classList.add('active');
-  document.querySelector(`[data-tab="${t}"]`)?.classList.add('active');
-  const cb = document.getElementById('chat-bar');
-  cb.style.display = t==='chat'?'flex':'none';
-  document.getElementById('main-scroll').style.paddingBottom = t==='chat'?'130px':'90px';
-  if(t==='chat') setTimeout(()=>{document.getElementById('main-scroll').scrollTop=99999;},80);
+  document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on");});
+  document.querySelectorAll(".ni").forEach(function(x){x.classList.remove("on");});
+  document.getElementById("tab-"+t).classList.add("on");
+  var ni = document.querySelector("[data-t='"+t+"']");
+  if(ni) ni.classList.add("on");
+  var cb = document.getElementById("chat-bar");
+  cb.style.display = t==="chat" ? "flex" : "none";
+  document.getElementById("scroll").style.paddingBottom = t==="chat" ? "130px" : "90px";
+  if(t==="chat") { setTimeout(function(){document.getElementById("scroll").scrollTop=99999;},80); }
 }
 
-// ── VOCAB ─────────────────────────────────────────────────
+// ── VOCAB ──────────────────────────────────────────────────
 function renderVocabCats() {
-  document.getElementById('vocab-cats').innerHTML = Object.keys(VOCAB).map(c=>
-    `<span class="ctag ${c===S.vocabCat?'active':''}" onclick="selVocabCat('${c}')">${c.charAt(0).toUpperCase()+c.slice(1)}</span>`
-  ).join('');
+  document.getElementById("vcats").innerHTML = Object.keys(VOCAB).map(function(c){
+    return '<button class="ctag'+(c===S.vCat?" on":"")+'" onclick="selVCat(\''+c+'\')">'+ c.charAt(0).toUpperCase()+c.slice(1)+'</button>';
+  }).join("");
 }
-function selVocabCat(c){S.vocabCat=c;S.wordIdx=0;showWord();renderVocabCats();}
+function selVCat(c){ S.vCat=c; S.vIdx=0; showWord(); renderVocabCats(); }
 function showWord() {
-  const w = VOCAB[S.vocabCat][S.wordIdx];
-  document.getElementById('w-badge').textContent = S.vocabCat.charAt(0).toUpperCase()+S.vocabCat.slice(1);
-  document.getElementById('w-en').textContent = w.en;
-  document.getElementById('w-pron').textContent = w.pron;
-  document.getElementById('w-es').textContent = w.es;
-  document.getElementById('w-ex').innerHTML = '📝 '+w.ex;
-  document.getElementById('ai-word-box').style.display='none';
+  var w = VOCAB[S.vCat][S.vIdx];
+  document.getElementById("wb").textContent = S.vCat.charAt(0).toUpperCase()+S.vCat.slice(1);
+  document.getElementById("wen").textContent = w.en;
+  document.getElementById("wpr").textContent = w.pr;
+  document.getElementById("wes").textContent = w.es;
+  document.getElementById("wex").innerHTML = "📝 " + w.ex;
+  document.getElementById("wai").style.display = "none";
 }
-function nextWord(){S.wordIdx=(S.wordIdx+1)%VOCAB[S.vocabCat].length;S.wordsViewed++;save();updateStats();showWord();}
-function prevWord(){S.wordIdx=(S.wordIdx-1+VOCAB[S.vocabCat].length)%VOCAB[S.vocabCat].length;showWord();}
-function speakWord(){speak(VOCAB[S.vocabCat][S.wordIdx].en);}
-
-async function explainWord() {
-  const w = VOCAB[S.vocabCat][S.wordIdx];
-  const box = document.getElementById('ai-word-box');
-  const txt = document.getElementById('ai-word-txt');
-  box.style.display='block'; txt.textContent='Consultando IA...';
+function nextW(){ S.vIdx=(S.vIdx+1)%VOCAB[S.vCat].length; S.words++; saveState(); updateStats(); showWord(); }
+function prevW(){ S.vIdx=(S.vIdx-1+VOCAB[S.vCat].length)%VOCAB[S.vCat].length; showWord(); }
+function speakW(){ tts(VOCAB[S.vCat][S.vIdx].en); }
+async function explainW() {
+  var w = VOCAB[S.vCat][S.vIdx];
+  document.getElementById("wai").style.display = "block";
+  document.getElementById("wait").textContent = "Consultando IA...";
   try {
-    const r = await gemini(`Explica la palabra en inglés "${w.en}" (${w.es}) para nivel ${S.level}. 4-5 líneas: uso, ejemplos adicionales y tip de pronunciación. En español, amigable, emojis.`);
-    txt.textContent=r; addXP(2);
-  } catch(e){txt.textContent='Error: '+e.message;}
+    var r = await ai("Explain the English word \"" + w.en + "\" (" + w.es + ") for a " + S.level + " level student. Give: pronunciation tip, 2 example sentences, common collocations. Answer in Spanish, friendly, use emojis.");
+    document.getElementById("wait").textContent = r;
+    addXP(2);
+  } catch(e){ document.getElementById("wait").textContent = "Error: " + e.message; }
 }
-
-async function practiceWord() {
-  const w = VOCAB[S.vocabCat][S.wordIdx];
-  speak(w.en);
-  await new Promise(r=>setTimeout(r,1600));
-  startRec('word',(t)=>{
-    if(t.toLowerCase().includes(w.en.toLowerCase())||lev(t.toLowerCase(),w.en.toLowerCase())<=2){
-      toast('¡Perfecto! ✅ +5 XP','ok'); addXP(5);
+async function practiceW() {
+  var w = VOCAB[S.vCat][S.vIdx];
+  tts(w.en);
+  await new Promise(function(r){setTimeout(r,1500);});
+  startRec("word", function(t){
+    var got = t.toLowerCase().trim();
+    var target = w.en.toLowerCase();
+    if(got.indexOf(target)!==-1 || lev(got,target)<=2){
+      toast("Perfecto! ✅", "ok"); addXP(5);
     } else {
-      toast(`Dijiste "${t}". La palabra es "${w.en}"`, 'info');
+      toast("Dijiste: \""+t+"\". Era: \""+w.en+"\"", "info");
     }
   });
 }
 
-// ── QUIZ ──────────────────────────────────────────────────
-let curQuiz=null, qCount=0;
-
-async function genQuiz() {
-  document.getElementById('qz-load').style.display='block';
-  document.getElementById('qz-fb').className='qfb';
-  document.getElementById('btn-nxt').style.display='none';
-  document.querySelectorAll('.qopt').forEach(b=>{b.disabled=false;b.className='qopt';});
-  const xp=S.level==='beginner'?10:S.level==='elementary'?12:S.level==='intermediate'?15:20;
-  document.getElementById('qz-xp').textContent=`+${xp} XP`;
+// ── QUIZ ───────────────────────────────────────────────────
+async function loadQuiz() {
+  document.getElementById("qldg").style.display = "block";
+  document.getElementById("qfb").className = "q-fb";
+  document.getElementById("qnxt").style.display = "none";
+  document.querySelectorAll(".qopt").forEach(function(b){b.disabled=false;b.className="qopt";});
+  var xpVal = S.level==="beginner"?10:S.level==="elementary"?12:S.level==="intermediate"?15:20;
+  document.getElementById("qxp").textContent = "+" + xpVal + " XP";
   try {
-    const raw = await gemini(`Crea una pregunta de opción múltiple sobre vocabulario o gramática inglesa para nivel ${S.level}. Responde SOLO con JSON sin backticks: {"question":"...","options":["A","B","C","D"],"correct":0,"explanation":"breve en español"}. "correct" es el índice 0-3 de la respuesta correcta.`);
-    curQuiz = JSON.parse(raw.replace(/\`\`\`json|\`\`\`/g,'').trim());
-    document.getElementById('qz-q').textContent=curQuiz.question;
-    document.getElementById('qz-opts').innerHTML=curQuiz.options.map((o,i)=>
-      `<button class="qopt" onclick="checkQuiz(${i})">${o}</button>`
-    ).join('');
-    qCount++; document.getElementById('qz-prog').style.width=Math.min(qCount*10,100)+'%';
-  } catch(e){document.getElementById('qz-q').textContent='Error. Intenta de nuevo.';}
-  document.getElementById('qz-load').style.display='none';
+    var raw = await ai("Create a multiple choice question about English vocabulary or grammar for " + S.level + " level. Reply ONLY with valid JSON no backticks: {\"question\":\"...\",\"options\":[\"A\",\"B\",\"C\",\"D\"],\"correct\":0,\"explanation\":\"brief explanation in Spanish\"}. correct is the index 0-3 of the right answer.");
+    curQuiz = JSON.parse(raw.replace(/```json|```/g,"").trim());
+    document.getElementById("qtxt").textContent = curQuiz.question;
+    document.getElementById("qopts").innerHTML = curQuiz.options.map(function(o,i){
+      return '<button class="qopt" onclick="checkQuiz('+i+')">' + o + '</button>';
+    }).join("");
+    qCount++;
+    document.getElementById("qprog").style.width = Math.min(qCount*10,100)+"%";
+  } catch(e){
+    document.getElementById("qtxt").textContent = "Error al generar pregunta. Toca Nueva pregunta.";
+  }
+  document.getElementById("qldg").style.display = "none";
 }
 
 function checkQuiz(idx) {
   if(!curQuiz) return;
-  document.querySelectorAll('.qopt').forEach(b=>b.disabled=true);
-  S.quizTotal++;
-  const xp=S.level==='beginner'?10:S.level==='elementary'?12:S.level==='intermediate'?15:20;
-  const fb=document.getElementById('qz-fb');
+  document.querySelectorAll(".qopt").forEach(function(b){b.disabled=true;});
+  S.qTotal++;
+  var xpVal = S.level==="beginner"?10:S.level==="elementary"?12:S.level==="intermediate"?15:20;
+  var fb = document.getElementById("qfb");
+  var opts = document.querySelectorAll(".qopt");
   if(idx===curQuiz.correct){
-    document.querySelectorAll('.qopt')[idx].classList.add('correct');
-    fb.textContent='✅ '+curQuiz.explanation; fb.className='qfb show ok';
-    S.quizCorrect++; addXP(xp);
+    opts[idx].classList.add("ok");
+    fb.textContent = "✅ " + curQuiz.explanation;
+    fb.className = "q-fb on ok";
+    S.qRight++; addXP(xpVal);
   } else {
-    document.querySelectorAll('.qopt')[idx].classList.add('wrong');
-    document.querySelectorAll('.qopt')[curQuiz.correct].classList.add('correct');
-    fb.textContent='❌ '+curQuiz.explanation; fb.className='qfb show fail';
+    opts[idx].classList.add("fail");
+    opts[curQuiz.correct].classList.add("ok");
+    fb.textContent = "❌ " + curQuiz.explanation;
+    fb.className = "q-fb on fail";
   }
-  save(); updateStats();
-  document.getElementById('btn-nxt').style.display='inline-flex';
+  saveState(); updateStats();
+  document.getElementById("qnxt").style.display = "inline-flex";
 }
 
-// ── SPEAK ─────────────────────────────────────────────────
-function loadSpeak() {
-  const p = SPEAK_P[spIdx%SPEAK_P.length];
-  document.getElementById('sp-phrase').textContent=p.en;
-  document.getElementById('sp-es').textContent=p.es;
-  document.getElementById('sp-trans').textContent='';
-  const r=document.getElementById('sp-res'); r.style.display='none'; r.className='speak-result';
+// ── SPEAK ──────────────────────────────────────────────────
+function loadSpeakPhrase() {
+  var p = SPEAK_LIST[spIdx % SPEAK_LIST.length];
+  document.getElementById("spph").textContent = p.en;
+  document.getElementById("spes").textContent = p.es;
+  document.getElementById("sptr").textContent = "";
+  var r = document.getElementById("spres"); r.style.display="none"; r.className="sp-res";
 }
-function nextPhrase(){spIdx++;loadSpeak();}
-function speakPhrase(){speak(document.getElementById('sp-phrase').textContent);}
-
+function nextPhrase(){ spIdx++; loadSpeakPhrase(); }
+function listenPhrase(){ tts(document.getElementById("spph").textContent); }
 async function aiPhrase() {
   try {
-    const raw=await gemini(`Dame UNA frase en inglés de nivel ${S.level} para practicar pronunciación. SOLO JSON: {"en":"frase","es":"traducción"}`);
-    const p=JSON.parse(raw.replace(/\`\`\`json|\`\`\`/g,'').trim());
-    document.getElementById('sp-phrase').textContent=p.en;
-    document.getElementById('sp-es').textContent=p.es;
-    document.getElementById('sp-trans').textContent='';
-    const r=document.getElementById('sp-res'); r.style.display='none'; r.className='speak-result';
-  } catch(e){toast('Error generando frase','info');}
+    var raw = await ai("Give ONE English sentence for " + S.level + " level to practice pronunciation. Reply ONLY JSON: {\"en\":\"sentence\",\"es\":\"translation in Spanish\"}");
+    var p = JSON.parse(raw.replace(/```json|```/g,"").trim());
+    document.getElementById("spph").textContent = p.en;
+    document.getElementById("spes").textContent = p.es;
+    document.getElementById("sptr").textContent = "";
+    var r = document.getElementById("spres"); r.style.display="none"; r.className="sp-res";
+  } catch(e){ toast("Error", "info"); }
 }
-
 function toggleSpeak() {
-  const btn=document.getElementById('sp-mic');
-  if(S.recMode==='speak'){stopRec();return;}
-  btn.classList.add('go');
-  const target=document.getElementById('sp-phrase').textContent;
-  startRec('speak',(t)=>{
-    btn.classList.remove('go');
-    document.getElementById('sp-trans').textContent=`"${t}"`;
-    evalPron(t,target);
-  },(interim)=>{document.getElementById('sp-trans').textContent=interim+'...'});
+  var btn = document.getElementById("sp-mic");
+  if(S.recMode==="speak"){ stopRec(); return; }
+  btn.classList.add("go");
+  var target = document.getElementById("spph").textContent;
+  startRec("speak", function(t){
+    btn.classList.remove("go");
+    document.getElementById("sptr").textContent = "\"" + t + "\"";
+    evalPron(t, target);
+  }, function(interim){
+    document.getElementById("sptr").textContent = interim + "...";
+  });
 }
-
-async function evalPron(said,target) {
-  const res=document.getElementById('sp-res');
-  res.style.display='block'; res.textContent='Evaluando...'; res.className='speak-result show';
-  const sim=similarity(said.toLowerCase(),target.toLowerCase());
-  if(sim>0.75){
-    res.textContent=`✅ ¡Excelente pronunciación, ${S.name}! Muy bien dicho.`;
-    res.className='speak-result show ok'; addXP(15);
-  } else if(sim>0.45){
-    res.textContent=`🟡 Casi bien. Dijiste: "${said}". Intenta de nuevo.`;
-    res.className='speak-result show warn';
+async function evalPron(said, target) {
+  var res = document.getElementById("spres");
+  res.style.display = "block"; res.textContent = "Evaluando..."; res.className = "sp-res on";
+  var sim = similarity(said.toLowerCase(), target.toLowerCase());
+  if(sim > 0.75){
+    res.textContent = "✅ Excellent pronunciation, " + S.name + "! That was great!";
+    res.className = "sp-res on ok"; addXP(15);
+  } else if(sim > 0.45){
+    res.textContent = "🟡 Almost! You said: \"" + said + "\". Try again!";
+    res.className = "sp-res on warn";
   } else {
     try {
-      const fb=await gemini(`El estudiante intentó decir: "${target}". Dijo: "${said}". Feedback breve y amable en español sobre pronunciación.`);
-      res.textContent='💡 '+fb;
-    } catch(e){res.textContent=`Dijiste "${said}". La frase es "${target}". ¡Sigue practicando!`;}
-    res.className='speak-result show fail';
+      var fb = await ai("Student tried to say: \"" + target + "\". They said: \"" + said + "\". Give brief friendly pronunciation feedback in Spanish.");
+      res.textContent = "💡 " + fb;
+    } catch(e){
+      res.textContent = "Sigue practicando. La frase era: \"" + target + "\"";
+    }
+    res.className = "sp-res on bad";
   }
 }
 
-// ── PHRASES ───────────────────────────────────────────────
+// ── PHRASES ────────────────────────────────────────────────
 function renderPhraseCats() {
-  document.getElementById('phrase-cats').innerHTML = Object.keys(PHRASES).map(c=>
-    `<span class="ctag ${c===S.phraseCat?'active':''}" onclick="selPhraseCat('${c}')">${c.charAt(0).toUpperCase()+c.slice(1)}</span>`
-  ).join('');
+  document.getElementById("pcats").innerHTML = Object.keys(PHRASES).map(function(c){
+    return '<button class="ctag'+(c===S.pCat?" on":"")+'" onclick="selPCat(\''+c+'\')">'+ c.charAt(0).toUpperCase()+c.slice(1)+'</button>';
+  }).join("");
 }
-function selPhraseCat(c){S.phraseCat=c;renderPhrases();renderPhraseCats();}
+function selPCat(c){ S.pCat=c; renderPhrases(); renderPhraseCats(); }
 function renderPhrases() {
-  document.getElementById('phrases-list').innerHTML=PHRASES[S.phraseCat].map(p=>
-    `<div class="phrase-item"><div class="phrase-txt"><div class="phrase-en">${p.en}</div><div class="phrase-es">${p.es}</div></div><button class="phrase-spk" onclick="speak('${p.en.replace(/'/g,"\'")}')" >🔊</button></div>`  ).join('');
+  document.getElementById("plist").innerHTML = PHRASES[S.pCat].map(function(p){
+    var safe = p.en.replace(/"/g,"&quot;");
+    return '<div class="ph-item"><div style="flex:1"><div class="ph-en">'+p.en+'</div><div class="ph-es">'+p.es+'</div></div><button class="ph-spk" onclick="tts(\''+safe+'\')">🔊</button></div>';
+  }).join("");
 }
 async function morePhrases() {
-  const l=document.getElementById('ph-load'); l.style.display='block';
+  document.getElementById("pldg").style.display = "block";
   try {
-    const raw=await gemini(`4 frases en inglés útiles para "${S.phraseCat}". SOLO JSON array: [{"en":"...","es":"..."},...]`);
-    const arr=JSON.parse(raw.replace(/\`\`\`json|\`\`\`/g,'').trim());
-    PHRASES[S.phraseCat].push(...arr); renderPhrases(); addXP(3);
-  } catch(e){toast('Error generando frases','info');}
-  l.style.display='none';
+    var raw = await ai("Give 4 useful English phrases for situation: " + S.pCat + ". Reply ONLY JSON array: [{\"en\":\"...\",\"es\":\"...\"}]");
+    var arr = JSON.parse(raw.replace(/```json|```/g,"").trim());
+    PHRASES[S.pCat] = PHRASES[S.pCat].concat(arr);
+    renderPhrases(); addXP(3);
+  } catch(e){ toast("Error", "info"); }
+  document.getElementById("pldg").style.display = "none";
 }
 
-// ── CORRECT ───────────────────────────────────────────────
+// ── CORRECT ────────────────────────────────────────────────
 async function doCorrect() {
-  const text=document.getElementById('corr-in').value.trim();
-  if(!text){toast('Escribe algo primero','info');return;}
-  const l=document.getElementById('corr-load'); l.style.display='block';
-  document.getElementById('corr-res-card').style.display='none';
+  var text = document.getElementById("cta").value.trim();
+  if(!text){ toast("Escribe algo primero", "info"); return; }
+  document.getElementById("cldg").style.display = "block";
+  document.getElementById("cres-c").style.display = "none";
   try {
-    const r=await gemini(`Tutor de inglés. ${S.name} (nivel ${S.level}) escribió:
-"${text}"
-
-Responde en español con:
-✅ Versión corregida
-📝 Errores encontrados con explicación
-💡 Consejo de escritura
-🔤 Vocabulario alternativo
-
-Sé amable y motivador.`);
-    document.getElementById('corr-res').textContent=r;
-    document.getElementById('corr-res-card').style.display='block';
+    var r = await ai("You are an English teacher. " + S.name + " (level: " + S.level + ") wrote:\n\"" + text + "\"\n\nRespond in Spanish with:\n✅ Corrected version\n📝 Errors found with explanation\n💡 Writing tip\n🔤 Alternative vocabulary\n\nBe encouraging and friendly.");
+    document.getElementById("cres").textContent = r;
+    document.getElementById("cres-c").style.display = "block";
     addXP(8);
   } catch(e){
-    document.getElementById('corr-res').textContent='Error: '+e.message;
-    document.getElementById('corr-res-card').style.display='block';
+    document.getElementById("cres").textContent = "Error: " + e.message;
+    document.getElementById("cres-c").style.display = "block";
   }
-  l.style.display='none';
+  document.getElementById("cldg").style.display = "none";
 }
-function dictate(){startRec('dict',(t)=>{const el=document.getElementById('corr-in');el.value+=(el.value?' ':'')+t;});}
-function clearCorr(){document.getElementById('corr-in').value='';document.getElementById('corr-res-card').style.display='none';}
+function dictate() {
+  startRec("dict", function(t){
+    var el = document.getElementById("cta");
+    el.value += (el.value ? " " : "") + t;
+  });
+}
 
-// ── CHAT ──────────────────────────────────────────────────
-function addMsg(role,text) {
-  const box=document.getElementById('chat-msgs');
-  const d=document.createElement('div');
-  const isAI=role==='ai';
-  d.className='mw'+(isAI?'':' user');
-  d.innerHTML=`<div class="m-av">${isAI?'🤖':S.name.charAt(0).toUpperCase()}</div><div class="m-inner"><div class="m-name">${isAI?'Tutor IA':S.name}</div><div class="m-bub">${text}</div></div>`;
+// ── CHAT ───────────────────────────────────────────────────
+function addMsg(role, text) {
+  var box = document.getElementById("chat-msgs");
+  var d = document.createElement("div");
+  var isAI = role === "ai";
+  d.className = "mw" + (isAI ? "" : " u");
+  d.innerHTML = '<div class="m-av">'+(isAI?"🤖":S.name.charAt(0).toUpperCase())+'</div><div class="m-inner"><div class="m-name">'+(isAI?"Tutor IA":S.name)+'</div><div class="m-bub">'+text.replace(/\n/g,"<br>").replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>")+'</div></div>';
   box.appendChild(d);
-  document.getElementById('main-scroll').scrollTop=99999;
+  document.getElementById("scroll").scrollTop = 99999;
   return d;
 }
 
 async function sendChat() {
-  const inp=document.getElementById('chat-in');
-  const msg=inp.value.trim(); if(!msg) return;
-  inp.value=''; addMsg('user',msg);
-  S.chatHistory.push({role:'user',content:msg});
-  const typing=addMsg('ai','<span class="dots">Escribiendo</span>');
+  var inp = document.getElementById("chat-in");
+  var msg = inp.value.trim();
+  if(!msg) return;
+  inp.value = "";
+  addMsg("user", msg);
+  S.history.push({role:"user", content:msg});
+  var typing = addMsg("ai", '<span class="dots">Escribiendo</span>');
   try {
-    const reply=await geminiChat(S.chatHistory.slice(-10));
-    typing.querySelector('.m-bub').textContent=reply;
-    S.chatHistory.push({role:'assistant',content:reply});
+    var reply = await aiChat(S.history.slice(-12));
+    typing.querySelector(".m-bub").innerHTML = reply.replace(/\n/g,"<br>").replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>");
+    S.history.push({role:"assistant", content:reply});
     addXP(3);
-  } catch(e){typing.querySelector('.m-bub').textContent='Error de conexión. Verifica tu API key.';}
-  document.getElementById('main-scroll').scrollTop=99999;
+  } catch(e){
+    typing.querySelector(".m-bub").textContent = "Error: " + e.message + ". Verifica tu API key.";
+  }
+  document.getElementById("scroll").scrollTop = 99999;
 }
 
 function toggleChatMic() {
-  const btn=document.getElementById('chat-mic-btn');
-  if(S.recMode==='chat'){stopRec();return;}
-  btn.classList.add('go');
-  startRec('chat',(t)=>{
-    btn.classList.remove('go');
-    document.getElementById('chat-in').value=t;
+  var btn = document.getElementById("cmicbtn");
+  if(S.recMode==="chat"){ stopRec(); return; }
+  btn.classList.add("go");
+  startRec("chat", function(t){
+    btn.classList.remove("go");
+    document.getElementById("chat-in").value = t;
     sendChat();
-  },(interim)=>{document.getElementById('chat-in').value=interim;});
-}
-
-// ── CHALLENGE ─────────────────────────────────────────────
-async function loadChallenge() {
-  try {
-    const raw=await gemini(`Desafío de inglés para ${S.name}, nivel ${S.level}. SOLO JSON: {"title":"título corto","desc":"descripción motivadora 1-2 frases en español"}`);
-    const d=JSON.parse(raw.replace(/\`\`\`json|\`\`\`/g,'').trim());
-    document.getElementById('dc-title').textContent=d.title;
-    document.getElementById('dc-desc').textContent=d.desc;
-  } catch(e){
-    document.getElementById('dc-title').textContent='Quiz de Vocabulario';
-    document.getElementById('dc-desc').textContent='Responde 5 preguntas para ganar XP extra.';
-  }
-}
-
-// ── SPEECH REC ────────────────────────────────────────────
-function startRec(mode,onResult,onInterim) {
-  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){
-    toast('Usa Chrome para reconocimiento de voz','info'); return;
-  }
-  stopRec();
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  const r=new SR();
-  r.lang='en-US'; r.interimResults=!!onInterim; r.maxAlternatives=1;
-  S.rec=r; S.recMode=mode;
-  const ov=document.getElementById('mic-ov');
-  const ovt=document.getElementById('mic-ov-txt');
-  ov.classList.add('show');
-  r.onresult=(e)=>{
-    let fin='',int='';
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal) fin+=e.results[i][0].transcript;
-      else int+=e.results[i][0].transcript;
-    }
-    if(int&&onInterim){ovt.textContent=int;onInterim(int);}
-    if(fin){ovt.textContent=fin;onResult(fin);ov.classList.remove('show');S.recMode=null;}
-  };
-  r.onerror=(e)=>{ov.classList.remove('show');S.recMode=null;if(e.error!=='aborted')toast('Error mic: '+e.error,'info');};
-  r.onend=()=>{ov.classList.remove('show');S.recMode=null;document.getElementById('sp-mic').classList.remove('go');document.getElementById('chat-mic-btn').classList.remove('go');};
-  try{r.start();}catch(e){}
-}
-function stopRec(){
-  if(S.rec){try{S.rec.stop();}catch(e){}S.rec=null;}
-  S.recMode=null;
-  document.getElementById('mic-ov').classList.remove('show');
-  document.getElementById('sp-mic').classList.remove('go');
-  document.getElementById('chat-mic-btn').classList.remove('go');
-}
-
-// ── SPEECH SYNTH ──────────────────────────────────────────
-function speak(text) {
-  if(!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='en-US'; u.rate=0.85;
-  speechSynthesis.speak(u);
-}
-
-// ── UTILS ─────────────────────────────────────────────────
-function toast(msg,type='info') {
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.className=`toast ${type} show`;
-  setTimeout(()=>el.classList.remove('show'),2700);
-}
-function lev(a,b){
-  const m=a.length,n=b.length;
-  const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
-  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++) dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
-  return dp[m][n];
-}
-function similarity(a,b){const mx=Math.max(a.length,b.length);return mx===0?1:(mx-lev(a,b))/mx;}
-
-// ── BOOT ──────────────────────────────────────────────────
-
-// ── GEMINI ────────────────────────────────────────────────
-async function gemini(prompt) {
-  const r = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${S.apiKey}`,
-    {method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:600}})});
-  if(!r.ok) throw new Error('API error ' + r.status);
-  const d = await r.json();
-  return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
-}
-
-async function geminiChat(msgs) {
-  const contents = msgs.map(m => ({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
-  const r = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${S.apiKey}`,
-    {method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        contents,
-        systemInstruction:{parts:[{text:`Eres un tutor de inglés amigable para ${S.name}, nivel ${S.level}. Responde en español cuando hablen español, en inglés con traducción cuando practiquen. Sé conciso, práctico, motivador.`}]},
-        generationConfig:{maxOutputTokens:500}
-      })});
-  if(!r.ok) throw new Error('error');
-  const d = await r.json();
-  return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
-}
-
-// ── INIT ──────────────────────────────────────────────────
-function initApp() {
-  const h = new Date().getHours();
-  const g = h<12?'Buenos días':h<19?'Buenas tardes':'Buenas noches';
-  document.getElementById('tb-greet').textContent = `${g}, ${S.name} 👋`;
-  updateStats();
-  renderVocabCats(); showWord();
-  renderPhraseCats(); renderPhrases();
-  loadSpeak(); genQuiz(); loadChallenge(); startTimer();
-  setTimeout(()=>addMsg('ai',`¡Hola ${S.name}! 👋 Soy tu tutor de inglés. Escríbeme o usa el micrófono 🎤`),200);
-}
-
-function save() {
-  try{localStorage.setItem('imp3',JSON.stringify({name:S.name,level:S.level,apiKey:S.apiKey,xp:S.xp,streak:S.streak,wordsViewed:S.wordsViewed,quizTotal:S.quizTotal,quizCorrect:S.quizCorrect,minutes:S.minutes,lastDate:new Date().toDateString()}));}catch(e){}
-}
-
-function loadSaved() {
-  try{
-    const d=JSON.parse(localStorage.getItem('imp3')||'{}');
-    if(d.name&&d.apiKey){Object.assign(S,d);return true;}
-  }catch(e){}
-  return false;
-}
-
-function updateStats() {
-  document.getElementById('p-streak').textContent=S.streak;
-  document.getElementById('p-xp').textContent=S.xp;
-  document.getElementById('s-num').textContent=S.streak;
-  document.getElementById('s-msg').textContent=S.streak>0?`¡${S.streak} día${S.streak!==1?'s':''} seguido${S.streak!==1?'s':''}, ${S.name}!`:`¡Empieza hoy, ${S.name}!`;
-  document.getElementById('s-sub').textContent=S.streak>0?'Sigue así 🔥':'Tu racha comienza aquí';
-  document.getElementById('h-words').textContent=S.wordsViewed;
-  document.getElementById('h-acc').textContent=S.quizTotal>0?Math.round(S.quizCorrect/S.quizTotal*100)+'%':'0%';
-  document.getElementById('h-min').textContent=S.minutes;
-}
-
-function addXP(n){S.xp+=n;save();updateStats();toast(`+${n} XP ⚡`,'ok');}
-function startTimer(){setInterval(()=>{S.minutes=Math.floor((Date.now()-S.startTime)/60000);document.getElementById('h-min').textContent=S.minutes;save();},30000);}
-
-// ── TABS ──────────────────────────────────────────────────
-function switchTab(t) {
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-  document.querySelectorAll('.ni').forEach(x=>x.classList.remove('on'));
-  document.getElementById('tab-'+t)?.classList.add('on');
-  document.querySelector(`[data-tab="${t}"]`)?.classList.add('on');
-  const cb=document.getElementById('chat-bar');
-  cb.style.display=t==='chat'?'flex':'none';
-  document.getElementById('main-scroll').style.paddingBottom=t==='chat'?'130px':'90px';
-  if(t==='chat')setTimeout(()=>{document.getElementById('main-scroll').scrollTop=99999;},80);
-}
-
-// ── VOCAB ─────────────────────────────────────────────────
-function renderVocabCats() {
-  document.getElementById('vocab-cats').innerHTML=Object.keys(VOCAB).map(c=>
-    `<button class="ctag ${c===S.vocabCat?'on':''}" onclick="selVocabCat('${c}')">${c.charAt(0).toUpperCase()+c.slice(1)}</button>`
-  ).join('');
-}
-function selVocabCat(c){S.vocabCat=c;S.wordIdx=0;showWord();renderVocabCats();}
-function showWord(){
-  const w=VOCAB[S.vocabCat][S.wordIdx];
-  document.getElementById('w-badge').textContent=S.vocabCat.charAt(0).toUpperCase()+S.vocabCat.slice(1);
-  document.getElementById('w-en').textContent=w.en;
-  document.getElementById('w-pron').textContent=w.pron;
-  document.getElementById('w-es').textContent=w.es;
-  document.getElementById('w-ex').innerHTML='📝 '+w.ex;
-  document.getElementById('ai-word-box').style.display='none';
-}
-function nextWord(){S.wordIdx=(S.wordIdx+1)%VOCAB[S.vocabCat].length;S.wordsViewed++;save();updateStats();showWord();}
-function prevWord(){S.wordIdx=(S.wordIdx-1+VOCAB[S.vocabCat].length)%VOCAB[S.vocabCat].length;showWord();}
-function speakWord(){speak(VOCAB[S.vocabCat][S.wordIdx].en);}
-
-async function explainWord(){
-  const w=VOCAB[S.vocabCat][S.wordIdx];
-  const box=document.getElementById('ai-word-box');
-  const txt=document.getElementById('ai-word-txt');
-  box.style.display='block';txt.textContent='Consultando IA...';
-  try{const r=await gemini(`Explica la palabra en inglés "${w.en}" (${w.es}) para nivel ${S.level}. 4-5 líneas: uso, ejemplos y tip de pronunciación. En español, amigable, con emojis.`);txt.textContent=r;addXP(2);}
-  catch(e){txt.textContent='Error: '+e.message;}
-}
-
-async function practiceWord(){
-  const w=VOCAB[S.vocabCat][S.wordIdx];
-  speak(w.en);
-  await new Promise(r=>setTimeout(r,1600));
-  startRec('word',(t)=>{
-    if(t.toLowerCase().includes(w.en.toLowerCase())||lev(t.toLowerCase(),w.en.toLowerCase())<=2){toast('¡Perfecto! ✅','ok');addXP(5);}
-    else{toast(`Dijiste "${t}". Era "${w.en}"`, 'info');}
+  }, function(interim){
+    document.getElementById("chat-in").value = interim;
   });
 }
 
-// ── QUIZ ──────────────────────────────────────────────────
-curQuiz=null,qCount=0;
-async function genQuiz(){
-  document.getElementById('qz-load').style.display='block';
-  document.getElementById('qz-fb').className='qfb';
-  document.getElementById('btn-nxt').style.display='none';
-  document.querySelectorAll('.qopt').forEach(b=>{b.disabled=false;b.className='qopt';});
-  const xp=S.level==='beginner'?10:S.level==='elementary'?12:S.level==='intermediate'?15:20;
-  document.getElementById('qz-xp').textContent=`+${xp} XP`;
-  try{
-    const raw=await gemini(`Pregunta de opción múltiple sobre vocabulario o gramática inglesa para nivel ${S.level}. Responde SOLO JSON sin backticks: {"question":"...","options":["A","B","C","D"],"correct":0,"explanation":"breve en español"}`);
-    curQuiz=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    document.getElementById('qz-q').textContent=curQuiz.question;
-    document.getElementById('qz-opts').innerHTML=curQuiz.options.map((o,i)=>
-      `<button class="qopt" onclick="checkQuiz(${i})">${o}</button>`
-    ).join('');
-    qCount++;document.getElementById('qz-prog').style.width=Math.min(qCount*10,100)+'%';
-  }catch(e){document.getElementById('qz-q').textContent='Error. Intenta de nuevo.';}
-  document.getElementById('qz-load').style.display='none';
-}
-
-function checkQuiz(idx){
-  if(!curQuiz)return;
-  document.querySelectorAll('.qopt').forEach(b=>b.disabled=true);
-  S.quizTotal++;
-  const xp=S.level==='beginner'?10:S.level==='elementary'?12:S.level==='intermediate'?15:20;
-  const fb=document.getElementById('qz-fb');
-  if(idx===curQuiz.correct){
-    document.querySelectorAll('.qopt')[idx].classList.add('correct');
-    fb.textContent='✅ '+curQuiz.explanation;fb.className='qfb on ok';
-    S.quizCorrect++;addXP(xp);
-  }else{
-    document.querySelectorAll('.qopt')[idx].classList.add('wrong');
-    document.querySelectorAll('.qopt')[curQuiz.correct].classList.add('correct');
-    fb.textContent='❌ '+curQuiz.explanation;fb.className='qfb on fail';
-  }
-  save();updateStats();document.getElementById('btn-nxt').style.display='inline-flex';
-}
-
-// ── SPEAK ─────────────────────────────────────────────────
-spIdx=0;
-function loadSpeak(){
-  const p=SPEAK_P[spIdx%SPEAK_P.length];
-  document.getElementById('sp-phrase').textContent=p.en;
-  document.getElementById('sp-es').textContent=p.es;
-  document.getElementById('sp-trans').textContent='';
-  const r=document.getElementById('sp-res');r.style.display='none';r.className='sp-res';
-}
-function nextPhrase(){spIdx++;loadSpeak();}
-function speakPhrase(){speak(document.getElementById('sp-phrase').textContent);}
-async function aiPhrase(){
-  try{
-    const raw=await gemini(`UNA frase en inglés nivel ${S.level} para pronunciación. SOLO JSON: {"en":"...","es":"..."}`);
-    const p=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    document.getElementById('sp-phrase').textContent=p.en;
-    document.getElementById('sp-es').textContent=p.es;
-    document.getElementById('sp-trans').textContent='';
-    const r=document.getElementById('sp-res');r.style.display='none';r.className='sp-res';
-  }catch(e){toast('Error','info');}
-}
-function toggleSpeak(){
-  const btn=document.getElementById('sp-mic');
-  if(S.recMode==='speak'){stopRec();return;}
-  btn.classList.add('go');
-  const target=document.getElementById('sp-phrase').textContent;
-  startRec('speak',(t)=>{
-    btn.classList.remove('go');
-    document.getElementById('sp-trans').textContent=`"${t}"`;
-    evalPron(t,target);
-  },(interim)=>{document.getElementById('sp-trans').textContent=interim+'...';});
-}
-async function evalPron(said,target){
-  const res=document.getElementById('sp-res');
-  res.style.display='block';res.textContent='Evaluando...';res.className='sp-res on';
-  const sim=similarity(said.toLowerCase(),target.toLowerCase());
-  if(sim>0.75){res.textContent=`✅ ¡Excelente, ${S.name}!`;res.className='sp-res on ok';addXP(15);}
-  else if(sim>0.45){res.textContent=`🟡 Casi. Dijiste: "${said}". Intenta de nuevo.`;res.className='sp-res on warn';}
-  else{
-    try{const fb=await gemini(`Estudiante intentó decir: "${target}". Dijo: "${said}". Feedback breve y amable en español.`);res.textContent='💡 '+fb;}
-    catch(e){res.textContent=`Sigue practicando. Era: "${target}"`;}
-    res.className='sp-res on fail';
+// ── CHALLENGE ──────────────────────────────────────────────
+async function loadChallenge() {
+  try {
+    var raw = await ai("Create a daily English challenge for " + S.name + " at " + S.level + " level. Reply ONLY JSON: {\"title\":\"short title\",\"desc\":\"motivating description in Spanish 1-2 sentences\"}");
+    var d = JSON.parse(raw.replace(/```json|```/g,"").trim());
+    document.getElementById("dc-t").textContent = d.title;
+    document.getElementById("dc-d").textContent = d.desc;
+  } catch(e){
+    document.getElementById("dc-t").textContent = "Quiz de hoy";
+    document.getElementById("dc-d").textContent = "Responde preguntas y gana XP.";
   }
 }
 
-// ── PHRASES ───────────────────────────────────────────────
-function renderPhraseCats(){
-  document.getElementById('phrase-cats').innerHTML=Object.keys(PHRASES).map(c=>
-    `<button class="ctag ${c===S.phraseCat?'on':''}" onclick="selPhraseCat('${c}')">${c.charAt(0).toUpperCase()+c.slice(1)}</button>`
-  ).join('');
-}
-function selPhraseCat(c){S.phraseCat=c;renderPhrases();renderPhraseCats();}
-function renderPhrases(){
-  document.getElementById('phrases-list').innerHTML=PHRASES[S.phraseCat].map(p=>
-    `<div class="ph-item"><div class="ph-txt"><div class="ph-en">${p.en}</div><div class="ph-es">${p.es}</div></div><button class="ph-spk" onclick="speak('${p.en.replace(/'/g,"\'")}')" >🔊</button></div>`  ).join('');
-}
-async function morePhrases(){
-  const l=document.getElementById('ph-load');l.style.display='block';
-  try{
-    const raw=await gemini(`4 frases en inglés para "${S.phraseCat}". SOLO JSON: [{"en":"...","es":"..."},...]`);
-    const arr=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    PHRASES[S.phraseCat].push(...arr);renderPhrases();addXP(3);
-  }catch(e){toast('Error','info');}
-  l.style.display='none';
-}
-
-// ── CORRECT ───────────────────────────────────────────────
-async function doCorrect(){
-  const text=document.getElementById('corr-in').value.trim();
-  if(!text){toast('Escribe algo primero','info');return;}
-  const l=document.getElementById('corr-load');l.style.display='block';
-  document.getElementById('corr-res-card').style.display='none';
-  try{
-    const r=await gemini(`Tutor de inglés. ${S.name} (nivel ${S.level}) escribió:\n"${text}"\n\nResponde en español:\n✅ Versión corregida\n📝 Errores con explicación\n💡 Consejo\n🔤 Vocabulario alternativo\n\nSé amable.`);
-    document.getElementById('corr-res').textContent=r;
-    document.getElementById('corr-res-card').style.display='block';
-    addXP(8);
-  }catch(e){document.getElementById('corr-res').textContent='Error: '+e.message;document.getElementById('corr-res-card').style.display='block';}
-  l.style.display='none';
-}
-function dictate(){startRec('dict',(t)=>{const el=document.getElementById('corr-in');el.value+=(el.value?' ':'')+t;});}
-function clearCorr(){document.getElementById('corr-in').value='';document.getElementById('corr-res-card').style.display='none';}
-
-// ── CHAT ──────────────────────────────────────────────────
-function addMsg(role,text){
-  const box=document.getElementById('chat-msgs');
-  const d=document.createElement('div');
-  const isAI=role==='ai';
-  d.className='mw'+(isAI?'':' u');
-  d.innerHTML=`<div class="m-av">${isAI?'🤖':S.name.charAt(0).toUpperCase()}</div><div class="m-inner"><div class="m-name">${isAI?'Tutor IA':S.name}</div><div class="m-bub">${text}</div></div>`;
-  box.appendChild(d);
-  document.getElementById('main-scroll').scrollTop=99999;
-  return d;
-}
-async function sendChat(){
-  const inp=document.getElementById('chat-in');
-  const msg=inp.value.trim();if(!msg)return;
-  inp.value='';addMsg('user',msg);
-  S.chatHistory.push({role:'user',content:msg});
-  const typing=addMsg('ai','<span class="dots">Escribiendo</span>');
-  try{
-    const reply=await geminiChat(S.chatHistory.slice(-10));
-    typing.querySelector('.m-bub').textContent=reply;
-    S.chatHistory.push({role:'assistant',content:reply});
-    addXP(3);
-  }catch(e){typing.querySelector('.m-bub').textContent='Error de conexión.';}
-  document.getElementById('main-scroll').scrollTop=99999;
-}
-function toggleChatMic(){
-  const btn=document.getElementById('chat-mic-btn');
-  if(S.recMode==='chat'){stopRec();return;}
-  btn.classList.add('go');
-  startRec('chat',(t)=>{btn.classList.remove('go');document.getElementById('chat-in').value=t;sendChat();},
-    (interim)=>{document.getElementById('chat-in').value=interim;});
-}
-
-// ── CHALLENGE ─────────────────────────────────────────────
-async function loadChallenge(){
-  try{
-    const raw=await gemini(`Desafío de inglés para ${S.name}, nivel ${S.level}. SOLO JSON: {"title":"título corto","desc":"descripción 1-2 frases en español"}`);
-    const d=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    document.getElementById('dc-title').textContent=d.title;
-    document.getElementById('dc-desc').textContent=d.desc;
-  }catch(e){document.getElementById('dc-title').textContent='Quiz de Vocabulario';document.getElementById('dc-desc').textContent='Responde preguntas para ganar XP.';}
-}
-
-// ── SPEECH REC ────────────────────────────────────────────
-function startRec(mode,onResult,onInterim){
-  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){toast('Usa Chrome para voz','info');return;}
+// ── SPEECH REC ─────────────────────────────────────────────
+function startRec(mode, onResult, onInterim) {
+  if(!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)){
+    toast("Usa Chrome para reconocimiento de voz", "info"); return;
+  }
   stopRec();
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  const r=new SR();
-  r.lang='en-US';r.interimResults=!!onInterim;r.maxAlternatives=1;
-  S.rec=r;S.recMode=mode;
-  document.getElementById('mic-ov').classList.add('on');
-  r.onresult=(e)=>{
-    let fin='',int='';
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal)fin+=e.results[i][0].transcript;
-      else int+=e.results[i][0].transcript;
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var r = new SR();
+  r.lang = "en-US"; r.interimResults = !!onInterim; r.maxAlternatives = 1;
+  S.rec = r; S.recMode = mode;
+  document.getElementById("micov").classList.add("on");
+  r.onresult = function(e){
+    var fin="", intr="";
+    for(var i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal) fin += e.results[i][0].transcript;
+      else intr += e.results[i][0].transcript;
     }
-    if(int&&onInterim){document.getElementById('mic-ov-txt').textContent=int;onInterim(int);}
-    if(fin){document.getElementById('mic-ov-txt').textContent=fin;onResult(fin);stopRec();}
+    if(intr && onInterim){ document.getElementById("mictxt").textContent=intr; onInterim(intr); }
+    if(fin){ document.getElementById("mictxt").textContent=fin; onResult(fin); stopRec(); }
   };
-  r.onerror=(e)=>{stopRec();if(e.error!=='aborted')toast('Error mic: '+e.error,'info');};
-  r.onend=()=>{stopRec();};
-  try{r.start();}catch(e){}
+  r.onerror = function(e){ stopRec(); if(e.error!=="aborted") toast("Error mic: "+e.error,"info"); };
+  r.onend = function(){ stopRec(); };
+  try{ r.start(); }catch(e){}
 }
-function stopRec(){
-  if(S.rec){try{S.rec.stop();}catch(e){}S.rec=null;}
-  S.recMode=null;
-  document.getElementById('mic-ov').classList.remove('on');
-  document.getElementById('sp-mic').classList.remove('go');
-  document.getElementById('chat-mic-btn').classList.remove('go');
+function stopRec() {
+  if(S.rec){ try{S.rec.stop();}catch(e){} S.rec=null; }
+  S.recMode = null;
+  document.getElementById("micov").classList.remove("on");
+  var sm = document.getElementById("sp-mic"); if(sm) sm.classList.remove("go");
+  var cm = document.getElementById("cmicbtn"); if(cm) cm.classList.remove("go");
 }
 
-// ── TTS ───────────────────────────────────────────────────
-function speak(text){
-  if(!('speechSynthesis' in window))return;
+// ── TTS ────────────────────────────────────────────────────
+function tts(text) {
+  if(!("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='en-US';u.rate=0.85;
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-US"; u.rate = 0.85;
   speechSynthesis.speak(u);
 }
 
-// ── UTILS ─────────────────────────────────────────────────
-function toast(msg,type='info'){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.className=`toast ${type} on`;
-  setTimeout(()=>el.classList.remove('on'),2700);
+// ── UTILS ──────────────────────────────────────────────────
+function toast(msg, type) {
+  var el = document.getElementById("toast");
+  el.textContent = msg; el.className = "toast " + (type||"info") + " on";
+  setTimeout(function(){ el.classList.remove("on"); }, 2700);
 }
 function lev(a,b){
-  const m=a.length,n=b.length;
-  const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
-  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  var m=a.length,n=b.length;
+  var dp=[];
+  for(var i=0;i<=m;i++){dp[i]=[];for(var j=0;j<=n;j++)dp[i][j]=i===0?j:j===0?i:0;}
+  for(var i=1;i<=m;i++) for(var j=1;j<=n;j++) dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
   return dp[m][n];
 }
-function similarity(a,b){const mx=Math.max(a.length,b.length);return mx===0?1:(mx-lev(a,b))/mx;}
+function similarity(a,b){ var mx=Math.max(a.length,b.length); return mx===0?1:(mx-lev(a,b))/mx; }
 
-// ── BOOT ──────────────────────────────────────────────────
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+// ── BOOT ───────────────────────────────────────────────────
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(function(){});
 
-window.addEventListener('load', () => {
-  if(loadSaved() && S.name && S.apiKey) {
-    const today = new Date().toDateString();
-    const saved = JSON.parse(localStorage.getItem('imp3') || '{}');
-    const yest  = new Date(Date.now()-86400000).toDateString();
-    if(saved.lastDate === today) { /* misma sesión */ }
-    else if(saved.lastDate === yest) { S.streak++; }
-    else { S.streak = 1; }
-    save(); goApp();
+window.addEventListener("load", function(){
+  if(loadState() && S.name && S.apiKey){
+    var today = new Date().toDateString();
+    var saved = JSON.parse(localStorage.getItem("imp4")||"{}");
+    var yest = new Date(Date.now()-86400000).toDateString();
+    if(saved.lastDate === today){}
+    else if(saved.lastDate === yest){ S.streak++; }
+    else{ S.streak = 1; }
+    saveState();
+    document.getElementById("pg-ob").classList.remove("on");
+    document.getElementById("pg-app").classList.add("on");
+    initApp();
   }
 });
 </script>
